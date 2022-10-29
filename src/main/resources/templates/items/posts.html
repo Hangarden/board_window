@@ -37,10 +37,10 @@
             <!--            모델 어트리뷰트에서 받은 post를 가져와서 뿌려준다.-->
             <tr th:each="post : ${posts}">
                 <!--                변수를 사용하고 싶으면 아래와 같은 문법을 사용하여라-->
-                <td><a href="post.html" th:href="@{/posts/read/{id}(id=${post.id})}" th:text="${post.id}">
+                <td><a th:href="@{posts/{postId}(postId=${post.id})}" th:text="${post.id}">
                     게시글 ID</a></td>
-                <td><a href="post.html" th:href="@{/posts/read/{id}(id=${post.id})}" th:text="${post.title}">제목</a></td>
-                <td><a href="post.html" th:href="@{/posts/read/{id}(id=${post.id})}" th:text="${post.author}">작성자</a></td>
+                <td><a th:href="@{posts/{postId}(postId=${post.id})}" th:text="${post.title}">제목</a></td>
+                <td><a th:href="@{posts/{postId}(postId=${post.id})}" th:text="${post.author}">작성자</a></td>
                 <td th:text="${post.view}">조회수</td>
             </tr>
             </tbody>

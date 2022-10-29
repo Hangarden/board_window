@@ -29,7 +29,6 @@ public class Posts {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
 
-    @NotBlank
     private String author;
 
 

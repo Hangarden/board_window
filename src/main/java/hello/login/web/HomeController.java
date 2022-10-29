@@ -5,7 +5,6 @@ import hello.login.domain.item.Item;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
 import hello.login.web.argumentresolver.Login;
-import hello.login.web.posts.PostsService;
 import hello.login.web.posts.dto.PostsResponseDto;
 import hello.login.web.posts.dto.PostsUpdateRequestDto;
 import hello.login.web.session.SessionManager;
