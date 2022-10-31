@@ -2,17 +2,20 @@ package hello.login.web.posts;
 
 import hello.login.domain.Posts.Posts;
 import hello.login.domain.item.Item;
+import hello.login.web.item.form.ItemUpdateForm;
 import hello.login.web.posts.dto.PostsResponseDto;
 import hello.login.web.posts.dto.PostsSaveRequestDto;
 import hello.login.web.posts.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
-
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class PostsApiController {
@@ -26,6 +29,23 @@ public class PostsApiController {
         postsService.save(posts);
         return "redirect:/posts";
     }
+    @PostMapping("posts/{postId}/edit")
+    public String edit(@PathVariable Long postId, @Validated @ModelAttribute("post") PostsUpdateRequestDto form) {
+
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            return "items/editForm";
+//        }
+
+        Posts postParam = new Posts();
+        postParam.setTitle(form.getTitle());
+        postParam.setContent(form.getContent());
+        log.info("{}입니다", postParam);
+
+        postsService.update(postId, postParam);
+        return "redirect:/posts/{postId}";
+    }
+
 
 //    @PutMapping("/api/v1/posts/{id}")
 //    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {

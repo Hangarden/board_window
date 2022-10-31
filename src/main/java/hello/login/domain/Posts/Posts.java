@@ -54,5 +54,10 @@ public class Posts {
         this.content = content;
     }
 
+    public Posts updateViewCount(Integer view) {
+        this.view = view + 1;
+        return this;
+    }
+
 
 }

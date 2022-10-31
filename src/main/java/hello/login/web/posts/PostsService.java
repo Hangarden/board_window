@@ -26,7 +26,14 @@ public class PostsService {
     }
 
     public Posts findById(Long id) {
-        return store.get(id);
+        Posts posts =  store.get(id);
+        posts.updateViewCount(posts.getView());
+        return posts;
+    }
+
+    public Posts findForEditById(Long id) {
+        Posts posts =  store.get(id);
+        return posts;
     }
 
     public List<Posts> findAll() {
@@ -36,7 +43,6 @@ public class PostsService {
     public void update(Long postId, Posts updateParam) {
         Posts findPosts = findById(postId);
         findPosts.setTitle(updateParam.getTitle());
-        findPosts.setAuthor(updateParam.getAuthor());
         findPosts.setContent(updateParam.getContent());
     }
 

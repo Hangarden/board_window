@@ -17,7 +17,8 @@ import java.util.Optional;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class IndexController {
+public class
+IndexController {
 
     private final PostsService postsService;
 
@@ -26,7 +27,7 @@ public class IndexController {
     public String postsList(Model model) {
         List<Posts> posts = postsService.findAll();
         model.addAttribute("posts", posts);
-        return "items/posts";
+        return "posts/posts";
     }
 
 
@@ -34,7 +35,7 @@ public class IndexController {
     public String addPost(Model model) {
         //로그인 여부 체크
         model.addAttribute("post", new Item());//s붙이는지 안 붙이는지
-        return "items/addForm";
+        return "posts/addForm";
     }
 
     @GetMapping("/posts/{postId}")
@@ -43,8 +44,16 @@ public class IndexController {
         Posts posts = postsService.findById(postId);
         log.info("{} 입니다", posts);
         model.addAttribute("post", posts);
-        return "items/item";
+        return "posts/post";
     }
+
+    @GetMapping("posts/{postId}/edit")
+    public String editForm(@PathVariable Long postId, Model model) {
+        Posts posts = postsService.findForEditById(postId);
+        model.addAttribute("post", posts);
+        return "posts/editForm";
+    }
+
 //    @GetMapping("/posts/{postId}")
 //    public String postDetail(@PathVariable long postId, Model model) {
 //        //로그인 여부 체크
