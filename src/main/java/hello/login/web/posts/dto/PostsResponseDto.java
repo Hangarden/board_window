@@ -1,8 +1,11 @@
 package hello.login.web.posts.dto;
 
 import hello.login.domain.Posts.Posts;
-import hello.login.domain.member.Member;
+import hello.login.web.comment.CommentResponseDto;
 import lombok.Getter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -14,6 +17,8 @@ public class PostsResponseDto {
     private String author;
     private Integer view;
 
+    private List<CommentResponseDto> comments;
+
 
 
     public PostsResponseDto(Posts entity) {
@@ -23,6 +28,6 @@ public class PostsResponseDto {
         this.author = entity.getAuthor();
         this.view = entity.getView();
 //        this.userId = entity.getUser().getId();
-//        this.comments = entity.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
+        this.comments = entity.getComments().stream().map(CommentResponseDto::new).collect(Collectors.toList());
     }
 }

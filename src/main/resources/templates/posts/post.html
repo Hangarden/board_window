@@ -59,6 +59,48 @@
         </div>
     </div>
 
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.addComment}">댓글 등록</h2>
+    </div>
+    <br/>
+    <div class="card">
+        <div class="card-header bi bi-chat-right-dots"> Write a Comment</div>
+        <form>
+            <input type="hidden" id="postsId" value="{{posts.id}}">
+            <div class="card-body">
+                <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+            </div>
+            <div class="card-footer">
+                <button type="button" id="btn-comment-save" class="btn btn-outline-primary bi bi-pencil-square"> 등록</button>
+            </div>
+        </form>
+    </div>
+
+    </form>
+    <!-- Reply Section -->
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{label.comment.id}"></th>
+                <th th:text="#{label.comment.comment}"></th>
+                <th th:text="#{label.comment.author}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--            모델 어트리뷰트에서 받은 post를 가져와서 뿌려준다.-->
+            <tr th:each="comment : ${comments}">
+                <!--                변수를 사용하고 싶으면 아래와 같은 문법을 사용하여라-->
+                <td th:text="${comment.id}">댓글번호</td>
+                <td th:text="${comment.author}">작성자</td>
+                <td th:text="${comment.comment}">내용</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div> <!-- /container -->
 </body>
 </html>

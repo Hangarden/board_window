@@ -1,15 +1,14 @@
 package hello.login.domain.Posts;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hello.login.domain.member.Member;
+import hello.login.domain.comment.Comment;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @NoArgsConstructor
 @Entity
@@ -29,6 +28,9 @@ public class Posts {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
 
+    @OneToMany(mappedBy = "posts", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") // 댓글 정렬
+    private List<Comment> comments;
     private String author;
 
 
