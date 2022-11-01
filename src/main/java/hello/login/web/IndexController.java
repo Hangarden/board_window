@@ -4,6 +4,8 @@ import hello.login.domain.Posts.Posts;
 //import hello.login.domain.Posts.PostsRepository;
 import hello.login.domain.item.Item;
 import hello.login.web.posts.PostsService;
+import hello.login.web.posts.dto.PostsListResponseDto;
+import hello.login.web.posts.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,7 @@ IndexController {
 
     @GetMapping("/posts")
     public String postsList(Model model) {
-        List<Posts> posts = postsService.findAll();
+        List<PostsListResponseDto> posts = postsService.findAllDesc();
         model.addAttribute("posts", posts);
         return "posts/posts";
     }
@@ -41,16 +43,17 @@ IndexController {
     @GetMapping("/posts/{postId}")
     public String postDetail(@PathVariable long postId, Model model) {
         //로그인 여부 체크
-        Posts posts = postsService.findById(postId);
-        log.info("{} 입니다", posts);
-        model.addAttribute("post", posts);
+        PostsResponseDto ResponseDto = postsService.findById(postId);
+        log.info("{} 입니다", ResponseDto);
+        postsService.updateView(postId);
+        model.addAttribute("post", ResponseDto);
         return "posts/post";
     }
 
     @GetMapping("posts/{postId}/edit")
     public String editForm(@PathVariable Long postId, Model model) {
-        Posts posts = postsService.findForEditById(postId);
-        model.addAttribute("post", posts);
+        PostsResponseDto ResponseDto = postsService.findById(postId);
+        model.addAttribute("post", ResponseDto);
         return "posts/editForm";
     }
 

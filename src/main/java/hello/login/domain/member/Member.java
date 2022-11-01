@@ -2,6 +2,7 @@ package hello.login.domain.member;
 
 import hello.login.domain.Posts.Posts;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,10 +33,17 @@ public class Member {
     @NotEmpty
     private String password;
 
-//    public Member(Long id, String loginId, String name, String password) {
-//        this.id = id;
-//        this.loginId = loginId;
-//        this.name = name;
-//        this.password = password;
-//    }
+    @Builder
+    public Member(String loginId, String name, String password) {
+        this.loginId = loginId;
+        this.name = name;
+        this.password = password;
+    }
+    public Member(Member entity) {
+        this.id = id;
+        this.loginId = loginId;
+        this.name = name;
+        this.password = password;
+    }
+
 }

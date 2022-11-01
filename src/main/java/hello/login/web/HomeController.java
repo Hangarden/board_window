@@ -5,6 +5,7 @@ import hello.login.domain.item.Item;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
 import hello.login.web.argumentresolver.Login;
+import hello.login.web.member.MemberService;
 import hello.login.web.posts.dto.PostsResponseDto;
 import hello.login.web.posts.dto.PostsUpdateRequestDto;
 import hello.login.web.session.SessionManager;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final SessionManager sessionManager;
 
     //    @GetMapping("/")
@@ -38,7 +39,7 @@ public class HomeController {
         }
 
         //로그인
-        Member loginMember = memberRepository.findById(memberId);
+        Member loginMember = memberService.findById(memberId); //해결
         if (loginMember == null) {
             return "home";
         }

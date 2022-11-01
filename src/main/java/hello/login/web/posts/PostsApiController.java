@@ -23,10 +23,10 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @PostMapping("/posts/save")
-    public String  addItem(@Validated @ModelAttribute("post") @RequestBody Posts posts, HttpSession session) {
+    public String  addItem(@Validated @ModelAttribute("post") @RequestBody PostsSaveRequestDto saveRequestDto, HttpSession session) {
         String author = (String) session.getAttribute("userName");
-        posts.setAuthor(author);
-        postsService.save(posts);
+        saveRequestDto.setAuthor(author);
+        postsService.save(saveRequestDto);
         return "redirect:/posts";
     }
     @PostMapping("posts/{postId}/edit")
@@ -37,12 +37,11 @@ public class PostsApiController {
 //            return "items/editForm";
 //        }
 
-        Posts postParam = new Posts();
-        postParam.setTitle(form.getTitle());
-        postParam.setContent(form.getContent());
-        log.info("{}입니다", postParam);
+        form.setTitle(form.getTitle());
+        form.setContent(form.getContent());
+        log.info("{}입니다", form);
 
-        postsService.update(postId, postParam);
+        postsService.update(postId, form);
         return "redirect:/posts/{postId}";
     }
 
