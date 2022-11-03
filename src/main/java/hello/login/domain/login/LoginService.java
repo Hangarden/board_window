@@ -7,9 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-
-@Service
 @RequiredArgsConstructor
+@Service
 public class LoginService {
 
     private final MemberService memberService;

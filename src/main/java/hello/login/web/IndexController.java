@@ -2,7 +2,7 @@ package hello.login.web;
 
 //import hello.login.domain.Posts.PostsRepository;
 import hello.login.domain.Posts.Posts;
-import hello.login.domain.item.Item;
+//import hello.login.domain.item.Item;
 import hello.login.web.comment.CommentResponseDto;
 import hello.login.web.posts.PostsService;
 import hello.login.web.posts.dto.PostsListResponseDto;

@@ -1,4 +1,4 @@
-package hello.login.domain.item;
-
-public interface UpdateCheck {
-}
+//package hello.login.domain.item;
+//
+//public interface UpdateCheck {
+//}

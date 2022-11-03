@@ -4,22 +4,22 @@ const main = {
 
         // 댓글 저장
         $('#btn-comment-save').on('click', function () {
+            alert("11");
             _this.commentSave();
+        });
+
+        $('#btn-Member-save').on('click', function () {
+            alert("11");
+            _this.memberSave();
         });
     },
 
     /** 댓글 저장 */
-    commentSave: function () {
+    memberSave: function () {
         const data = {
             postsId: $('#postsId').val(),
             comment: $('#comment').val()
-        }
-
-        // 공백 및 빈 문자열 체크
-        if (!data.comment || data.comment.trim() === "") {
-            alert("공백 또는 입력하지 않은 부분이 있습니다.");
-            return false;
-        } else {
+        };
             $.ajax({
                 type: 'POST',
                 url: '/api/posts/' + data.postsId + '/comments',
@@ -29,13 +29,11 @@ const main = {
             }).done(function () {
                 alert('댓글이 등록되었습니다.');
                 window.location.reload();
-                location.reload();
-                location.href = location.href;
-                history.go(0)
+
             }).fail(function (error) {
                 alert('댓글 입력 실패');
             });
         }
-    },
 
-}
+};
+main.init();

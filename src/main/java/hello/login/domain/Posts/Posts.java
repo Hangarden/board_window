@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @NoArgsConstructor
@@ -18,9 +19,11 @@ public class Posts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min=1, message = "한글자 이상은 입력하셔야 합니다")
     @NotBlank
     @Column(length = 500)
     private String title;
+    @Size(min=1, message = "한글자 이상은 입력하셔야 합니다")
     @NotBlank
     @Column(columnDefinition = "TEXT")
     private String content;

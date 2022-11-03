@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    @Query("SELECT m FROM Member m ORDER BY m.id DESC")
+    @Query("SELECT m FROM Member m ORDER BY m.memberKey DESC")
     List<Member> findAllDesc();
 }

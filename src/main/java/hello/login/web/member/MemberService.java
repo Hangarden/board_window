@@ -22,10 +22,13 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long save(Member member) {
-        return memberRepository.save(member).getId();
+    public Long save(MemberCreateForm createForm) {
+        return memberRepository.save(createForm.toEntity()).getMemberKey();
     }
 
+//    public Long save(Member member) {
+//        return memberRepository.save(member).getKey();
+//    }
     @Transactional
     public Member findById(Long id) {
         Member member = memberRepository.findById(id)
@@ -38,11 +41,12 @@ public class MemberService {
         return memberRepository.findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findFirst();
     }
 
-        @Transactional(readOnly = true)
-        public List<Member> findAllDesc() {
-        return memberRepository.findAllDesc().stream()
-                .map(Member::new)
-                .collect(Collectors.toList());
-        }
+//    @Transactional(readOnly = true)
+//    public List<Member> findAllDesc() {
+//        return memberRepository.findAllDesc().stream()
+//                .map(Member::new)
+//                .collect(Collectors.toList());
+//        }
+
     }
 
