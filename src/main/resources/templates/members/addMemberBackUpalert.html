@@ -1,0 +1,179 @@
+<!--<!DOCTYPE HTML>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <link th:href="@{/css/bootstrap.min.css}"-->
+<!--          href="../css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        .container {-->
+<!--            max-width: 560px;-->
+<!--        }-->
+<!--        .field-error {-->
+<!--            border-color: #dc3545;-->
+<!--            color: #dc3545;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="container">-->
+
+<!--    <div class="py-5 text-center">-->
+<!--        <h2>회원 가입</h2>-->
+<!--    </div>-->
+
+<!--    <h4 class="mb-3">회원 정보 입력</h4>-->
+
+<!--    <form action="" th:action th:object="${member}" method="post">-->
+
+<!--        <div th:if="${#fields.hasGlobalErrors()}">-->
+<!--            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--            <label for="loginId">*로그인 ID</label>-->
+<!--            <input type="text" id="loginId" th:field="*{loginId}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check(this)" onkeydown="check(this)" >-->
+<!--            &lt;!&ndash; id ajax 중복체크 &ndash;&gt;-->
+<!--            <span class="id_ok">사용 가능한 아이디입니다.</span>-->
+
+<!--            &lt;!&ndash; id ajax 중복체크 &ndash;&gt;-->
+<!--            <div class="field-error" th:errors="*{loginId}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="password">*비밀번호</label>-->
+<!--            <input type="password" id="password" th:field="*{password}" class="form-control"-->
+<!--                   th:errorclass="field-error">-->
+<!--            <div class="field-error" th:errors="*{password}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="passwordCheck">*비밀번호 확인</label>-->
+<!--            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" class="form-control"-->
+<!--                   th:errorclass="field-error">-->
+<!--            <div class="field-error" th:errors="*{password}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="name">*이름</label>-->
+<!--            <input type="text" id="name" th:field="*{name}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check(this)" onkeydown="check(this)">-->
+<!--            <div class="field-error" th:errors="*{name}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="email">이메일</label>-->
+<!--            <input type="text" id="email" th:field="*{email}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check_email(this)" onkeydown="check_email(this)">-->
+<!--            <div class="field-error" th:errors="*{email}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="zip_code">우편번호</label>-->
+<!--            <input type="text" id="zip_code" th:field="*{zip_code}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check_zipcode(this)" onkeydown="check_zipcode(this)">-->
+<!--            <div class="field-error" th:errors="*{zip_code}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="address1">주소1</label>-->
+<!--            <input type="text" id="address1" th:field="*{address1}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check_address(this)" onkeydown="check_address(this)">-->
+<!--            <div class="field-error" th:errors="*{address1}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="address2">주소2</label>-->
+<!--            <input type="text" id="address2" th:field="*{address2}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check_address(this)" onkeydown="check_address(this)">-->
+<!--            <div class="field-error" th:errors="*{address2}" />-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label for="phoneNumber">*전화번호</label>-->
+<!--            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="check_phoneNumber(this)" onkeydown="check_phoneNumber(this)">-->
+<!--            <div class="field-error" th:errors="*{phoneNumber}" />-->
+<!--        </div>-->
+
+<!--        <hr class="my-4">-->
+
+<!--        <div class="row">-->
+<!--            <div class="col">-->
+<!--                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>-->
+<!--            </div>-->
+<!--            <div class="col">-->
+<!--                <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'"-->
+<!--                        th:onclick="|location.href='@{/}'|"-->
+<!--                        type="button">취소</button>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </form>-->
+
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<script type="text/javascript">-->
+
+<!--    function check(obj){-->
+<!--        //정규식으로 특수문자 판별-->
+<!--        const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;-->
+
+<!--        //배열에서 하나씩 값을 비교-->
+<!--        if( regExp.test(obj.value) ){-->
+<!--            //값이 일치하면 문자를 삭제-->
+<!--            obj.value = obj.value.substring( 0 , obj.value.length - 1 );-->
+<!--            window.alert("특수문자 및 공백 입력불가");-->
+<!--        }-->
+
+<!--    }-->
+<!--    function check_zipcode(obj){-->
+<!--        //정규식으로 특수문자 판별-->
+<!--        const regExp = /^[0-9-]{5}$/gi;-->
+
+<!--        //배열에서 하나씩 값을 비교-->
+<!--        if( regExp.test(obj.value) ){-->
+<!--            //값이 일치하면 문자를 삭제-->
+<!--            obj.value = obj.value.substring( 0 , obj.value.length - 1 );-->
+<!--            window.alert("특수문자 및 공백 입력불가");-->
+<!--        }-->
+
+<!--    }-->
+
+
+<!--    function check_address(obj){-->
+<!--        //정규식으로 특수문자 판별-->
+<!--        const regExp = /[!@#$%^&*(),.?\\":{}|<>]/gi;-->
+
+<!--        //배열에서 하나씩 값을 비교-->
+<!--        if( regExp.test(obj.value) ){-->
+<!--            //값이 일치하면 문자를 삭제-->
+<!--            obj.value = obj.value.substring( 0 , obj.value.length - 1 );-->
+<!--            window.alert("특수문자 및 입력불가");-->
+<!--        }-->
+
+<!--    }-->
+
+<!--    function check_email(obj){-->
+<!--        //정규식으로 특수문자 판별-->
+<!--        const regExp = /[ \{\}\[\]\/?,;:|\)*~`!^\-_+┼<>\#$%&\'\"\\\(\=]/gi;-->
+
+<!--        //배열에서 하나씩 값을 비교-->
+<!--        if( regExp.test(obj.value) ){-->
+<!--            //값이 일치하면 문자를 삭제-->
+<!--            obj.value = obj.value.substring( 0 , obj.value.length - 1 );-->
+<!--            window.alert("특수문자 및 공백 입력불가");-->
+<!--        }-->
+
+<!--    }-->
+
+<!--    function check_phoneNumber(obj){-->
+<!--        //정규식으로 특수문자 판별-->
+<!--        const regExp = /^[0-9-]{14,15}$/gi;-->
+
+<!--        //배열에서 하나씩 값을 비교-->
+<!--        if( regExp.test(obj.value) ){-->
+<!--            //값이 일치하면 문자를 삭제-->
+<!--            obj.value = obj.value.substring( 0 , obj.value.length - 1 );-->
+<!--            window.alert("특수문자 및 공백 입력불가");-->
+<!--        }-->
+
+<!--    }-->
+
+<!--</script>-->

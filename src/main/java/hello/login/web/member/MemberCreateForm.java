@@ -27,12 +27,12 @@ public class MemberCreateForm {
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
     private String passwordCheck;
 
-    @NotEmpty(message = "이메일은 필수항목입니다.")
+//    @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email
     private String email;
 
-    @Size(min=4)
-    @NotNull
+//    @Size(min=4)
+//    @NotNull
     private String zip_code;
     private String address1;
     private String address2;

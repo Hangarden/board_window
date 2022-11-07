@@ -24,7 +24,7 @@ public class Member {
 
     @Size(min=5, message = "ID는 5글자 이상 입력해주세여")
     @NotEmpty
-    @Column(name = "userId")
+    @Column(name = "loginId")
     private String loginId; //로그인 ID
     @Size(min=2, message = "이름은 2글자 이상 입력해주세요, 숫자, 특수문자는 사용 불가능 합니다")
     @NotEmpty

@@ -25,7 +25,7 @@ public class LogFilter implements Filter {
         String uuid = UUID.randomUUID().toString();
 
         try {
-            log.info("REQUEST [{}][{}]", uuid, requestURI);
+            log.info("REQUEST [{}][{}]", uuid, requestURI); //uuid, Request URL
             chain.doFilter(request, response);
         } catch (Exception e) {
             throw e;

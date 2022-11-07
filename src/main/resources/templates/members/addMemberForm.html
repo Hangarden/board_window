@@ -1,6 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
@@ -12,6 +16,30 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+
+        .id_ok {
+            display: none;
+        }
+        .id_already {
+            display: none;
+        }
+
+        .id_null {
+            display: none;
+        }
+
+        .number_ok {
+            display: none;
+        }
+        .number_already {
+            display: none;
+        }
+
+        .error_next_box{
+            display: none;
+        }
+
+
     </style>
 </head>
 <body>
@@ -24,7 +52,7 @@
 
     <h4 class="mb-3">회원 정보 입력</h4>
 
-    <form action="" th:action th:object="${member}" method="post">
+    <form action="/members/add" th:action th:object="${member}" method="post">
 
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
@@ -33,7 +61,12 @@
         <div>
             <label for="loginId">*로그인 ID</label>
             <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
-                   th:errorclass="field-error" onkeyup="check(this)" onkeydown="check(this)" >
+                   th:errorclass="field-error" onkeyup="checkId(this)" maxlength="12">
+            <!-- id ajax 중복체크 -->
+            <span class="id_ok">사용 가능한 아이디입니다.</span>
+            <span class="id_already">누군가 이 아이디를 사용하고 있어요.</span>
+            <span class="error_next_box">필수 입력정보. 5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
+            <!-- id ajax 중복체크 -->
             <div class="field-error" th:errors="*{loginId}" />
         </div>
         <div>
@@ -55,13 +88,13 @@
             <div class="field-error" th:errors="*{name}" />
         </div>
         <div>
-            <label for="email">*이메일</label>
+            <label for="email">이메일</label>
             <input type="text" id="email" th:field="*{email}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_email(this)" onkeydown="check_email(this)">
             <div class="field-error" th:errors="*{email}" />
         </div>
         <div>
-            <label for="zip_code">*우편번호</label>
+            <label for="zip_code">우편번호</label>
             <input type="text" id="zip_code" th:field="*{zip_code}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_zipcode(this)" onkeydown="check_zipcode(this)">
             <div class="field-error" th:errors="*{zip_code}" />
@@ -82,6 +115,8 @@
             <label for="phoneNumber">*전화번호</label>
             <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_phoneNumber(this)" onkeydown="check_phoneNumber(this)">
+            <span class="number_ok">사용 가능한 번호입니다.</span>
+            <span class="number_already">누군가 이 번호를 사용하고 있어요.</span>
             <div class="field-error" th:errors="*{phoneNumber}" />
         </div>
 
@@ -89,8 +124,9 @@
 
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+                <button id = "sign_in" class="w-100 btn btn-primary btn-lg" type="submit" disabled>회원 가입</button>
             </div>
+            <p class="caution">필수입력칸(*)은 모두 입력해야합니다.</p>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg" onclick="location.href='items.html'"
                         th:onclick="|location.href='@{/}'|"
@@ -119,15 +155,17 @@
         }
 
     }
+
+
     function check_zipcode(obj){
         //정규식으로 특수문자 판별
-        const regExp = /^[0-9-]{5}$/gi;
+        const regExp = /^[0-9-]{6}$/gi;
 
         //배열에서 하나씩 값을 비교
         if( regExp.test(obj.value) ){
             //값이 일치하면 문자를 삭제
             obj.value = obj.value.substring( 0 , obj.value.length - 1 );
-            window.alert("5자리 숫자만 입력");
+            window.alert("특수문자 및 공백 입력불가");
         }
 
     }
@@ -161,15 +199,172 @@
 
     function check_phoneNumber(obj){
         //정규식으로 특수문자 판별
-        const regExp = /^[0-9-]{14,15}$/ gi;
-
+        const regExp = /^[0-9-]{14,15}$/gi;
+        // const phoneNumber = $('#phoneNumber').val(); //id값이 "id"인 입력란의 값을 저장
         //배열에서 하나씩 값을 비교
-        if( regExp.test(obj.value) ){
+        if( regExp.test(phoneNumber) ){
             //값이 일치하면 문자를 삭제
             obj.value = obj.value.substring( 0 , obj.value.length - 1 );
             window.alert("특수문자 및 공백 입력불가");
         }
 
+        // $.ajax({
+        //     url:'./add/phoneCheck', //Controller에서 요청 받을 주소
+        //     type:'post', //POST 방식으로 전달
+        //     data:{phoneNumber:phoneNumber}, //바꾸어야함
+        //     success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
+        //         if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+        //             $('.number_ok').css("display","inline-block");
+        //             $('.number_already').css("display", "none");
+        //             // alert("올바른 아이디")
+        //         } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+        //             // alert("올바른 아이디")
+        //             $('.number_already').css("display","inline-block");
+        //             $('.number_ok').css("display", "none");
+        //             // alert("아이디를 다시 입력해주세요");
+        //         }
+        //     },
+        //     error:function(request, error) {
+        //         alert("fail");
+        //         alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        //     }
+        // });
+
     }
+
+    function checkId(obj) {
+        const loginId = $('#loginId').val(); //id값이 "id"인 입력란의 값을 저장
+        const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+
+        // //배열에서 하나씩 값을 비교
+        // if (regExp.test(obj.value)) {
+        //     //값이 일치하면 문자를 삭제
+        //     obj.value = obj.value.substring(0, obj.value.length - 1);
+        //     window.alert("특수문자 및 공백 입력불가");
+        // }
+
+
+
+        if (loginId.length <= 4) {
+            $('.error_next_box').css("display", "inline-block");
+            $('.id_already').css("display", "none");
+            $('.id_ok').css("display", "none");
+        }
+        else {
+            checkId2();
+        }
+
+
+    }
+    //
+    //     $.ajax({
+    //         url:'./add/idCheck', //Controller에서 요청 받을 주소
+    //         type:'post', //POST 방식으로 전달
+    //         data:{loginId:loginId}, //바꾸어야함
+    //         success:function(loginId){ //컨트롤러에서 넘어온 cnt값을 받는다
+    //             if(loginId.length == 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+    //                 $('.id_null').css("display","inline-block");
+    //                 $('.id_already').css("display", "none");
+    //                 $('.id_ok').css("display", "none");
+    //                 $('.error_next_box').css("display", "none");
+    //                 // alert("올바른 아이디")
+    //             } else if (loginId.length <= 4) { // cnt가 1일 경우 -> 이미 존재하는 아이디
+    //                 // alert("올바른 아이디")
+    //                 $('.id_already').css("display","inline-block");
+    //                 $('.id_ok').css("display", "none");
+    //                 $('.id_null').css("display", "none");
+    //                 $('.error_next_box').css("display", "none");
+    //                 // alert("아이디를 다시 입력해주세요");
+    //             } else if (cnt) { // cnt가 1일 경우 -> 이미 존재하는 아이디
+    //                 // alert("올바른 아이디")
+    //                 $('.id_already').css("display","inline-block");
+    //                 $('.id_ok').css("display", "none");
+    //                 $('.id_null').css("display", "none");
+    //                 $('.error_next_box').css("display", "none");
+    //                 // alert("아이디를 다시 입력해주세요");
+    //             }
+    //
+    //         },
+    //         error:function(request, error) {
+    //             alert("fail");
+    //             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    //         }
+    //     });
+    // };
+
+    function checkId2() {
+        const loginId = $('#loginId').val(); //id값이 "id"인 입력란의 값을 저장
+        const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        $.ajax({
+            url: './add/idCheck', //Controller에서 요청 받을 주소
+            type: 'post', //POST 방식으로 전달
+            data: {loginId: loginId}, //바꾸어야함
+            success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
+                if (cnt == 0) { //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                    $('.id_ok').css("display", "inline-block");
+                    $('.id_already').css("display", "none");
+                    $('.error_next_box').css("display", "none");
+                    // alert("올바른 아이디")
+                } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+                    // alert("올바른 아이디")
+                    $('.id_already').css("display", "inline-block");
+                    $('.id_ok').css("display", "none");
+                    $('.error_next_box').css("display", "none");
+                    // alert("아이디를 다시 입력해주세요");
+                }
+            },
+            error: function (request, error) {
+                alert("fail");
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+
+    }
+
+    const formWrap = document.querySelector('.container');
+    const idForm = document.querySelector('#loginId');
+    const pwForm = document.querySelector('#password');
+    const nameForm = document.querySelector('#name');
+    const phoneNumberForm = document.querySelector('#phoneNumber');
+    const loginButton = document.querySelector('#sign_in');
+
+    idForm.addEventListener('keyup', activeEvent);
+    pwForm.addEventListener('keyup', activeEvent);
+    nameForm.addEventListener('keyup', activeEvent);
+    phoneNumberForm.addEventListener('keyup', activeEvent);
+
+    function activeEvent() {
+        switch(!(idForm.value && pwForm.value && nameForm.value && phoneNumberForm.value)){
+            case true : loginButton.disabled = true; break;
+            case false : loginButton.disabled = false; break
+        }
+    }
+
+
+    // function numberCheck(){
+    //     const phoneNumber = $('#phoneNumber').val(); //id값이 "id"인 입력란의 값을 저장
+    //     $.ajax({
+    //         url:'./add/phoneCheck', //Controller에서 요청 받을 주소
+    //         type:'post', //POST 방식으로 전달
+    //         data:{phoneNumber:phoneNumber}, //바꾸어야함
+    //         success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
+    //             if(cnt == 0){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+    //                 $('.number_ok').css("display","inline-block");
+    //                 $('.number_already').css("display", "none");
+    //                 // alert("올바른 아이디")
+    //             } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
+    //                 // alert("올바른 아이디")
+    //                 $('.number_already').css("display","inline-block");
+    //                 $('.number_ok').css("display", "none");
+    //                 // alert("아이디를 다시 입력해주세요");
+    //             }
+    //         },
+    //         error:function(request, error) {
+    //             alert("fail");
+    //             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    //         }
+    //     });
+    // };
+
 
 </script>

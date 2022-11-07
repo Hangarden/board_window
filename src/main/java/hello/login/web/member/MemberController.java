@@ -8,19 +8,19 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
 
-    private final MemberService memberRepository;
+    private final MemberService memberService;
+
+    private final MemberRepository memberRepository;
 
     @GetMapping("/add")
     public String addForm(@ModelAttribute("member") MemberCreateForm createForm) {
@@ -46,7 +46,27 @@ public class MemberController {
             return "members/addMemberForm";
         }
 
-        memberRepository.save(form);
+        memberService.save(form);
         return "redirect:/";
     }
+
+    //아이디 중복체크
+    @PostMapping("add/idCheck")
+    @ResponseBody
+    public int idCheck(@RequestParam("loginId") String loginId) {
+
+        int cnt = memberService.idCheck(loginId);
+        return cnt;
+
+    }
+
+    @PostMapping("add/phoneCheck")
+    @ResponseBody
+    public int NumberCheck(@RequestParam("phoneNumber") String phoneNumber) {
+
+        int cnt = memberService.numberCheck(phoneNumber);
+        return cnt;
+
+    }
+
 }
