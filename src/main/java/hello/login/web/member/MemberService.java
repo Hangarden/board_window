@@ -1,25 +1,36 @@
 package hello.login.web.member;
 
-import hello.login.domain.Posts.Posts;
-import hello.login.domain.Posts.PostsRepository;
 import hello.login.domain.member.Member;
 import hello.login.domain.member.MemberRepository;
-import hello.login.web.posts.dto.PostsListResponseDto;
-import hello.login.web.posts.dto.PostsResponseDto;
-import hello.login.web.posts.dto.PostsSaveRequestDto;
+import hello.login.web.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class MemberService {
 
     private final MemberRepository memberRepository;
+
+    private final MemberMapper mapper;
+
+
+    public int idCheck(String loginId) {
+        int cnt = mapper.idCheck(loginId);
+        System.out.println("cnt: " + cnt);
+        return cnt;
+    }
+
+    public int numberCheck(String phoneNumber) {
+        int cnt = mapper.numberCheck(phoneNumber);
+        System.out.println("cnt: " + cnt);
+        return cnt;
+    }
+
+
 
     @Transactional
     public Long save(MemberCreateForm createForm) {
@@ -40,6 +51,7 @@ public class MemberService {
     public Optional<Member> findByLoginId(String loginId) {
         return memberRepository.findAll().stream().filter(m -> m.getLoginId().equals(loginId)).findFirst();
     }
+
 
 //    @Transactional(readOnly = true)
 //    public List<Member> findAllDesc() {

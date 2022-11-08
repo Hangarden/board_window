@@ -28,8 +28,12 @@ public class MemberCreateForm {
     private String passwordCheck;
 
 //    @NotEmpty(message = "이메일은 필수항목입니다.")
-    @Email
-    private String email;
+
+    private String email1;
+
+    private String email2;
+
+    private String email3;
 
 //    @Size(min=4)
 //    @NotNull
@@ -37,19 +41,28 @@ public class MemberCreateForm {
     private String address1;
     private String address2;
 
-    @Size(min=12, max=15)
-    private String phoneNumber;
+    @Size(min=2, max=3)
+    @NotEmpty
+    private String phoneNumber1;
+
+    @Size(min=3, max=5)
+    @NotEmpty
+    private String phoneNumber2;
+
+    @Size(min=3, max=5)
+    @NotEmpty
+    private String phoneNumber3;
 
     public Member toEntity() {
         return Member.builder()
                 .loginId(loginId)
                 .name(name)
                 .password(password)
-                .email(email)
+                .email(email1 + "@" + email2 + "." + email3)
                 .zip_code(zip_code)
                 .address1(address1)
                 .address2(address2)
-                .phoneNumber(phoneNumber)
+                .phoneNumber(phoneNumber1 + phoneNumber2 + phoneNumber3)
                 .build();
     }
 }

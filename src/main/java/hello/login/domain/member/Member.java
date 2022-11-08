@@ -30,20 +30,17 @@ public class Member {
     @NotEmpty
     @Column(name = "userName")
     private String name; //사용자 이름
-    @Size(min=8, message = "비밀번호는 8글자 이상, 한개이상의 대문자, 소문자, 숫자를 사용하여 입력해주세요") //https://docs.oracle.com/cd/E56343_01/html/E53930/password-constrain-1.html 참고
+    @Size(min=8, message = "8자리 이상 입력하여야 합니다") //https://docs.oracle.com/cd/E56343_01/html/E53930/password-constrain-1.html 참고
     @NotEmpty
     private String password;
 
-    @Email
     private String email;
 
-    @Size(min=4)
-    @NotNull
     private String zip_code;
     private String address1;
     private String address2;
 
-    @Size(min=12, max=15)
+    @NotEmpty
     private String phoneNumber;
 
 
