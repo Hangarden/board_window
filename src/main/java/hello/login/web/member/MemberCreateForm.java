@@ -17,39 +17,35 @@ public class MemberCreateForm {
     @NotEmpty
     private String loginId; //로그인 ID
 
-    @Size(min = 3, max = 25)
+    @Size(min = 2)
     @NotEmpty(message = "이름은 필수항목입니다.")
     private String name;
 
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
+    @Size(min = 8)
     private String password;
 
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
     private String passwordCheck;
 
-//    @NotEmpty(message = "이메일은 필수항목입니다.")
-
+    @NotEmpty(message = "이메일은 필수항목입니다.")
     private String email1;
 
     private String email2;
 
-    private String email3;
-
-//    @Size(min=4)
-//    @NotNull
+    @NotEmpty
+    @Size(min=5, max = 5)
     private String zip_code;
     private String address1;
     private String address2;
 
-    @Size(min=2, max=3)
+
     @NotEmpty
     private String phoneNumber1;
 
-    @Size(min=3, max=5)
     @NotEmpty
     private String phoneNumber2;
 
-    @Size(min=3, max=5)
     @NotEmpty
     private String phoneNumber3;
 
@@ -58,7 +54,7 @@ public class MemberCreateForm {
                 .loginId(loginId)
                 .name(name)
                 .password(password)
-                .email(email1 + "@" + email2 + "." + email3)
+                .email(email1 + "@" + email2)
                 .zip_code(zip_code)
                 .address1(address1)
                 .address2(address2)

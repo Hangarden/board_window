@@ -28,7 +28,7 @@ public class LogFilter implements Filter {
             log.info("REQUEST [{}][{}]", uuid, requestURI); //uuid, Request URL
             chain.doFilter(request, response);
         } catch (Exception e) {
-            throw e;
+            throw e; //성능에 영향을 줌
         } finally {
             log.info("RESPONSE [{}][{}]", uuid, requestURI);
         }

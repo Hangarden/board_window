@@ -6,10 +6,44 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/fb1ddc7078.js" crossorigin="anonymous"></script>
-    <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+            background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+            background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        .caution {
+            padding-top: 10px;
+            color: red;
+        }
+
         .container {
             max-width: 560px;
         }
@@ -37,8 +71,55 @@
         }
 
         .error_next_box{
-            display: none;
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
         }
+
+        .password-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .name-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .email-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .zip-code-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .address1-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+        .address2-guide {
+            color: green;
+            font-size: 15px;
+            display: flex;
+            padding-top: 10px;
+        }
+
+
 
         .password-same{
             display: none;
@@ -58,7 +139,6 @@
         }
 
         .name-guide {
-            font-size: small;
         }
 
         .password-not-same {
@@ -72,15 +152,12 @@
         }
 
         .zip-code-guide {
-            font-size: small;
         }
 
         .address1-guide {
-            font-size: small;
         }
 
         .address2-guide {
-            font-size: small;
         }
 
         .space-detect {
@@ -95,7 +172,13 @@
             display: none;
         }
 
-        .can-not-enter-email {
+        .can-not-enter-email1 {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .can-not-enter-email2 {
             font-size: small;
             color: red;
             display: none;
@@ -119,7 +202,45 @@
             display: none;
         }
 
-        .can-not-enter-phoneNumber {
+        .letter-error-loginId {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .letter-error-password {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+
+
+        .letter-error-zipcode{
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .letter-error-name {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .can-not-enter-phoneNumber1 {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .can-not-enter-name {
+            font-size: small;
+            color: red;
+            display: none;
+        }
+
+        .can-not-enter-phoneNumber2 {
             font-size: small;
             color: red;
             display: none;
@@ -165,16 +286,13 @@
         }
 
         .email1 {
-            width: 215px;
+            width: 240px;
         }
 
         .email2 {
-            width: 260px;
+            width: 315px;
         }
 
-        email3 {
-            width: 60px
-         }
 
         .tel1 {
             width: 200px;
@@ -204,7 +322,8 @@
 <body>
 
 <div class="container">
-
+    <div class="input-form-backgroud row">
+        <div class="input-form col-md-12 mx-auto">
     <div class="py-5 text-center">
         <h2>회원 가입</h2>
     </div>
@@ -221,6 +340,7 @@
             <label for="loginId" class="title" >*로그인 ID</label>
             <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
                    th:errorclass="field-error" onkeyup="checkId(this)" maxlength="12">
+            <span class="letter-error-loginId">5글자 미만 입력</span> <!-- css수정 -->
             <span class="can-not-enter">공백 및 특수문자 입력</span>
             <!-- id ajax 중복체크 -->
             <span class="id_ok">사용 가능한 아이디입니다.</span>
@@ -236,6 +356,7 @@
                    th:errorclass="field-error" onkeyup="checking_space(this)">
             <i class="fa fa-eye fa-lg"></i>
             </div>
+            <span class="letter-error-password">8글자 미만 입력</span> <!-- css수정 -->
             <span class="space-detect">공백이 감지 되었습니다</span>
             <div class="guide">
             <span class="password-guide">⦁ 공백 입력 불가. 8자리 이상 입력하여야 합니다</span>
@@ -257,31 +378,32 @@
             <label for="name" class="title">*이름</label>
             <input type="text" id="name" th:field="*{name}" class="form-control"
                    th:errorclass="field-error" onkeyup="checking_name(this)">
-            <span class="can-not-enter">공백 및 특수문자 입력</span>
+            <span class="letter-error-name">2글자 미만 입력</span> <!-- css수정 -->
+            <span class="can-not-enter-name">공백 및 특수문자 입력</span>
             <div class="guide">
-            <span class="name-guide">⦁ 특수문자 입력 불가</span>
+            <span class="name-guide">⦁ 특수문자 입력 불가, 2글자 이상 입력</span>
             </div>
             <div class="field-error" th:errors="*{name}" />
         </div>
         <div>
-            <div class="title">이메일</div>
+            <div class="title">*이메일</div>
             <div class="flex-container-email">
             <input type="text" id="email1" th:field="*{email1}" class="email1"
                    th:errorclass="field-error" onkeyup="check_email(this)" size="15"/>&nbsp;@&nbsp;
             <input type="text" id="email2" th:field="*{email2}" class="email2"
-                   th:errorclass="field-error" onkeyup="check_email(this)" size="20"/>&nbsp;.&nbsp;
-            <input type="text" id="email3" th:field="*{email3}" class="email3"
-                       th:errorclass="field-error" onkeyup="check_email(this)" size="10"/>
+                   th:errorclass="field-error" onkeyup="check_email(this)" size="25"/>
             </div>
             <span class="email-guide">⦁ 특수문자 및 공백 입력 불가</span>
             <div class="guide">
-            <span class="can-not-enter-email">특수문자 입력불가</span>
+            <span class="can-not-enter-email1">두 입력칸 모두 입력해야합니다</span>
+            <span class="can-not-enter-email2">특수문자 입력불가</span>
             </div>
         </div>
         <div>
             <label for="zip_code" class="title">우편번호</label>
             <input type="text" id="zip_code" th:field="*{zip_code}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_zipcode(this)">
+            <span class="letter-error-zipcode">5글자만 입력</span> <!-- css수정 -->
             <span class="can-not-enter-zipcode">⦁숫자가 아닌 입력 감지</span>
             <div class="guide">
             <span class="zip-code-guide">⦁ 숫자만 입력가능</span>
@@ -289,22 +411,22 @@
             <div class="field-error" th:errors="*{zip_code}" />
         </div>
         <div>
-            <label for="address1" class="title">주소1</label>
+            <label for="address1" class="title">주소 (시, 군, 구)</label>
             <input type="text" id="address1" th:field="*{address1}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_address1(this)">
             <span class="can-not-enter-address1">⦁한글과 숫자로만 이루어진 주소만 입력해주세요</span>
             <div class="field-error" th:errors="*{address1}" />
             <div class="guide">
-            <span class="address1-guide">⦁ '-' 제외 특수문자 입력불가</span>
+            <span class="address1-guide">⦁ 시, 군, 구 만 입력해주세요</span>
             </div>
         </div>
         <div>
-            <label for="address2" class="title">주소2</label>
+            <label for="address2" class="title">상세 주소</label>
             <input type="text" id="address2" th:field="*{address2}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_address2(this)">
             <span class="can-not-enter-address2">⦁한글과 숫자로만 이루어진 주소만 입력해주세요</span>
             <div>
-            <span class="address2-guide">⦁ '-', 한글, 숫자만 입력 가능</span>
+            <span class="address2-guide">⦁ 도로명주소, 지번, 동,호수로 이루어진 상세주소 입력해주세요</span>
             </div>
             <div class="field-error" th:errors="*{address2}" />
         </div>
@@ -318,7 +440,9 @@
             <input type="text" id="phoneNumber3" class="tel3" th:field="*{phoneNumber3}"
                    th:errorclass="field-error" onkeyup="check_phoneNumber(this)" size="4"/>
             </div>
-            <span class="can-not-enter-phoneNumber">숫자만 입력해주세요</span>
+<!--            <span class="letter-error-tel">8글자 미만, 15글자 초과 </span> &lt;!&ndash; css수정 &ndash;&gt;-->
+            <span class="can-not-enter-phoneNumber1">3칸 모두 입력해주셔야 합니</span>
+            <span class="can-not-enter-phoneNumber2">숫자만 입력해주세요, 8글자 이상 15글자 사이만 입력가능</span>
 
 <!--            <span class="number_ok">사용 가능한 번호입니다.</span>-->
 <!--            <span class="number_already">누군가 이 번호를 사용하고 있어요.</span>-->
@@ -341,6 +465,8 @@
     </form>
 
 </div> <!-- /container -->
+    </div>
+</div>
 </body>
 </html>
 
@@ -349,26 +475,40 @@
 <script type="text/javascript">
 
     var valid_password = false; //필수 값은 false
-    var valid_email = true; //선택값은 true
-    var valid_address1 = true;
+    var valid_email = false;
+    var valid_address1 = true; //선택값은 true
     var valid_address2 = true;
     var valid_name = false; //필수
     var valid_password_check = false; //필수
     var valid_id = false; //필수
     var valid_zipcode = true;
     var valid_tel = false; //필수
+    var valid_tel_input = false; //필수
+    var valid_email_input = true
 
 
     function check_phoneNumber(obj) {
         //정규식으로 특수문자 판별 /[a-z]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g;
-        const regExp = /[a-zA-Zㄱ-ㅎㅏ-ㅣ]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/gi;
+        const regExp = /[a-zA-Zㄱ-ㅎㅏ-ㅣ]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]|\s/gi;
+        const number1 = $('#phoneNumber1').val(); //비밀번호
+        const number2 = $('#phoneNumber2').val(); //비밀번호 확인
+        const number3 = $('#phoneNumber3').val(); //비밀번호 확인
         // const phoneNumber = $('#phoneNumber').val(); //id값이 "id"인 입력란의 값을 저장
         //배열에서 하나씩 값을 비교
+        if(  (number1 != '') && (number2 !='') && (number3 != '')  ) {
+            $('.can-not-enter-phoneNumber1').css("display", "none");
+            valid_tel_input = true;
+        } else {
+            $('.can-not-enter-phoneNumber1').css("display", "inline-block");
+            valid_tel_input = false;
+        }
+
+
         if (regExp.test(obj.value)) {
-            $('.can-not-enter-phoneNumber').css("display", "inline-block");
+            $('.can-not-enter-phoneNumber2').css("display", "inline-block");
             valid_tel = false; //제외문자가 포함되어 있다면 false로 변환
         } else {
-            $('.can-not-enter-phoneNumber').css("display", "none");
+            $('.can-not-enter-phoneNumber2').css("display", "none");
             valid_tel = true; //제외문자가 포함되어 있다면 true로 변환
         }
         activeEvent();
@@ -406,12 +546,20 @@
 
     function checking_space(obj) {
         const pattern = /\s/g;
+        const password = $('#password').val();
+// "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 
-        if(pattern.test(obj.value) ) {
+        if (password.length <= 7) {
+            $('.letter-error-zipcode').css("display", "inline-block");
+            valid_zipcode = false;
+        }
+        else if(  (password.length >=8) && (pattern.test(obj.value)) ) {
             $('.space-detect').css("display", "inline-block");
+            $('.letter-error-zipcode').css("display", "none");
             valid_password = false;
-        } else{
+        } else if(  (password.length >=8) && (!(pattern.test(obj.value))) ){
             $('.space-detect').css("display", "none");
+            $('.letter-error-zipcode').css("display", "none");
             valid_password = true;
         }
         activeEvent();
@@ -419,14 +567,21 @@
 
     function check_zipcode(obj){
         //정규식으로 특수문자 판별
-        const regExp = /[a-zA-Z]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g;
+        const regExp = /[a-zA-Z]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]|\s/g;
+        const zipcode = $('#zip_code').val();
 
-        //배열에서 하나씩 값을 비교
-        if(regExp.test(obj.value) ){
-            $('.can-not-enter-zipcode').css("display", "none");
+        if (zipcode.length != 5) {
+            $('.letter-error-zipcode').css("display", "inline-block");
             valid_zipcode = false;
-        } else{
+        }
+        //배열에서 하나씩 값을 비교
+        else if(  (zipcode.length ==5) && (regExp.test(obj.value)) ){
             $('.can-not-enter-zipcode').css("display", "inline-block");
+            $('.letter-error-zipcode').css("display", "none");
+            valid_zipcode = false;
+        } else if(  (zipcode.length ==5) && (!(regExp.test(obj.value))) ){
+            $('.can-not-enter-zipcode').css("display", "none");
+            $('.letter-error-zipcode').css("display", "none");
             valid_zipcode = true;
         }
         activeEvent();
@@ -447,14 +602,24 @@
 
     function check_email(obj){
         //정규식으로 특수문자 판별
-        const regExp = /[ㄱ-ㅎㅏ-ㅣ]|[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        const regExp = /[ㄱ-ㅎㅏ-ㅣ]|[ \{\}\[\]\/?,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        const email1 = $('#email1').val(); //비밀번호
+        const email2 = $('#email2').val(); //비밀번호 확인
+
+        if(  (email1 != '') && (email2 !='') ) {
+            $('.can-not-enter-email1').css("display", "none");
+            valid_tel_input = true;
+        } else {
+            $('.can-not-enter-email1').css("display", "inline-block");
+            valid_tel_input = false;
+        }
 
         //배열에서 하나씩 값을 비교
         if(regExp.test(obj.value) ){
-            $('.can-not-enter-email').css("display", "inline-block");
+            $('.can-not-enter-email2').css("display", "inline-block");
             valid_email = false;
         } else{
-            $('.can-not-enter-email').css("display", "none");
+            $('.can-not-enter-email2').css("display", "none");
             valid_email = true;
         }
         activeEvent();
@@ -462,14 +627,33 @@
 
     function checking_name(obj) {
         const pattern = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        const name = $('#name').val();
 
-        if(pattern.test(obj.value) ) {
-            $('.can-not-enter').css("display", "inline-block");
+        if (name.length <= 1) { //길이가 4보다 작으면 무조건 나오도록
+            $('.letter-error-name').css("display", "inline-block");
             valid_name = false;
-        } else{
-            $('.can-not-enter').css("display", "none");
+        }
+        else if( (name.length >= 2) && (pattern.test(obj.value)) ) {
+            $('.can-not-enter-name').css("display", "inline-block");
+            $('.letter-error-name').css("display", "none");
+            valid_name = false;
+        } else if (  (name.length >= 2) && (!(pattern.test(obj.value)))  ){
+            $('.can-not-enter-name').css("display", "none");
+            $('.letter-error-name').css("display", "none");
             valid_name = true;
         }
+
+        //     $('.letter-error-name').css("display", "none");
+        //     valid_name = true; //ajax를 통해 실시간 검사하는 함수 호출
+        // }
+
+        // if(pattern.test(obj.value) ) {
+        //     $('.can-not-enter').css("display", "inline-block");
+        //     valid_name = false;
+        // } else{
+        //     $('.can-not-enter').css("display", "none");
+        //     valid_name = true;
+        // }
         activeEvent();
     }
 
@@ -504,27 +688,29 @@
         //     window.alert("특수문자 및 공백 입력불가");
         // }
 
-        if(regExp.test(obj.value) ){  //제외문자가 들어 있다면 해당하는 안내
+        if( (loginId.length <= 4) && (regExp.test(obj.value)) ){  //제외문자가 들어 있다면 해당하는 안내
             $('.can-not-enter').css("display", "inline-block");
             $('.id_ok').css("display", "none");
             $('.id_already').css("display", "none");
             $('.error_next_box').css("display", "none");
+            $('.letter-error-loginId').css("display", "none");
             valid_id = false;
-        } else {//없다면 전부다 none
+        } else if ( (loginId.length <= 4) && (!(regExp.test(obj.value))) ) {//없다면 전부다 none
+            $('.letter-error-loginId').css("display", "inline-block");
             $('.can-not-enter').css("display", "none");
             $('.id_ok').css("display", "none");
             $('.id_already').css("display", "none");
             $('.error_next_box').css("display", "none");
             valid_id = false;
-        }
-
-        if (loginId.length <= 4) { //길이가 4보다 작으면 무조건 나오도록
-            $('.error_next_box').css("display", "inline-block");
+        } else if ( (loginId.length >= 5) && (regExp.test(obj.value)) ) { //길이가 4보다 작으면 무조건 나오도록
+            $('.can-not-enter').css("display", "inline-block");
+            $('.letter-error-loginId').css("display", "none");
+            $('.error_next_box').css("display", "none");
             $('.id_already').css("display", "none");
             $('.id_ok').css("display", "none");
             valid_id = false;
         }
-        else {
+        else if ( (loginId.length >= 5) && (!(regExp.test(obj.value))) ){
             checkId2(); //ajax를 통해 실시간 검사하는 함수 호출
         }
         activeEvent();
@@ -568,7 +754,7 @@
 
     function checkId2() {
         const loginId = $('#loginId').val(); //id값이 "id"인 입력란의 값을 저장
-        const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
+        // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
         $.ajax({
             url: './add/idCheck', //Controller에서 요청 받을 주소
             type: 'post', //POST 방식으로 전달
@@ -578,6 +764,8 @@
                     $('.id_ok').css("display", "inline-block");
                     $('.id_already').css("display", "none");
                     $('.error_next_box').css("display", "none");
+                    $('.letter-error-loginId').css("display", "none");
+                    $('.can-not-enter').css("display", "none");
                     valid_id = true;
                     // alert("올바른 아이디")
                 } else { // cnt가 1일 경우 -> 이미 존재하는 아이디
@@ -585,6 +773,8 @@
                     $('.id_already').css("display", "inline-block");
                     $('.id_ok').css("display", "none");
                     $('.error_next_box').css("display", "none");
+                    $('.letter-error-loginId').css("display", "none");
+                    $('.can-not-enter').css("display", "none");
                     valid_id = false;
                     // alert("아이디를 다시 입력해주세요");
                 }
@@ -610,7 +800,7 @@
     // phoneNumberForm.addEventListener('keyup', activeEvent);
 
     function activeEvent() {
-        switch((valid_password && valid_email && valid_address1 && valid_address2 && valid_name && valid_password_check && valid_id && valid_zipcode && valid_tel )){
+        switch((valid_password && valid_email && valid_address1 && valid_address2 && valid_name && valid_password_check && valid_id && valid_zipcode && valid_tel && valid_tel_input && valid_email_input)){
             case true : loginButton.disabled = false; break;
             case false : loginButton.disabled = true; break;
         }

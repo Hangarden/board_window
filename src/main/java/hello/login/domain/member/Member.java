@@ -33,14 +33,17 @@ public class Member {
     @Size(min=8, message = "8자리 이상 입력하여야 합니다") //https://docs.oracle.com/cd/E56343_01/html/E53930/password-constrain-1.html 참고
     @NotEmpty
     private String password;
-
+    @NotEmpty
     private String email;
 
+    @Size(min=5, max = 5)
+    @NotEmpty
     private String zip_code;
     private String address1;
     private String address2;
 
     @NotEmpty
+    @Size(min =8, max = 13)
     private String phoneNumber;
 
 
