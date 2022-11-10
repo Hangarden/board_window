@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hello.login.web.mapper.MemberMapper">
+
+    <!-- -->
+    <!-- 아이디 중복 체크 -->
+    <select id="idCheck" parameterType="String" resultType="int"><!-- resultltType : select 된 데이터를 반환할 (그릇)을 정해주는것 위의 코드같은경우엔 StockNewsVO 객체에 담긴다 -->
+            /*회원 아이디 중복 체크*/
+            SELECT
+                COUNT(login_id)
+            FROM
+                member
+            WHERE
+                login_id= #{login_id}
+        </select>
+<!--        SELECT COUNT(login_id) FROM member WHERE login_id= #{login_id}-->
+<!--    </select>-->
+
+<!--    <select id="numberCheck" parameterType="String" resultType="int"> &lt;!&ndash; string 갑의 파라미터가 들어올 것이다. &ndash;&gt;-->
+<!--        SELECT COUNT(phone_number) FROM member WHERE phone_number= #{phone_number}-->
+<!--    </select>-->
+
+    <insert id="addMember" parameterType="Member">      <!-- id가 (interface) MemberMapper에 매핑시켜줌  -->
+        /* 회원가입 */
+        INSERT INTO member
+        (	  login_id
+        , password
+        , name
+        , email1
+        , email2
+        , zipcode
+        , address_one
+        , address_two
+        , tel1
+        , tel2
+        , tel3
+        )VALUES (
+                    #{login_id}
+                , #{password}
+                , #{name}
+                , #{email1}
+                , #{email2}
+                , #{zipcode}
+                , #{address_one}
+                , #{address_two}
+                , #{tel1}
+                , #{tel2}
+                , #{tel3}
+                );
+    </insert>
+
+
+</mapper>

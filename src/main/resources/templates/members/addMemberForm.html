@@ -337,8 +337,8 @@
         </div>
 
         <div>
-            <label for="loginId" class="title" >*로그인 ID</label>
-            <input type="text" id="loginId" th:field="*{loginId}" class="form-control"
+            <label for="login_id" class="title" >*로그인 ID</label>
+            <input type="text" id="login_id" th:field="*{login_id}" class="form-control"
                    th:errorclass="field-error" onkeyup="checkId(this)" maxlength="12">
             <span class="letter-error-loginId">5글자 미만 입력</span> <!-- css수정 -->
             <span class="can-not-enter">공백 및 특수문자 입력</span>
@@ -347,7 +347,7 @@
             <span class="id_already">누군가 이 아이디를 사용하고 있어요.</span>
             <span class="error_next_box">필수 입력정보. 5~12자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.</span>
             <!-- id ajax 중복체크 -->
-            <div class="field-error" th:errors="*{loginId}" />
+            <div class="field-error" th:errors="*{login_id}" />
         </div>
         <div>
             <label for="password" class="title">*비밀번호</label>
@@ -363,17 +363,17 @@
             </div>
             <div class="field-error" th:errors="*{password}" />
         </div>
-        <div>
-            <label for="passwordCheck" class="title">*비밀번호 확인</label>
-            <div class="main">
-            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" class="form-control"
-                   th:errorclass="field-error" onkeyup="password_same()">
-            <i class="fa fa-eye fa-lg"></i>
-            </div>
-            <span class="password-not-same">비밀번호 불일치</span>
-            <span class="password-same">비밀번호 일치</span>
-            <div class="field-error" th:errors="*{password}" />
-        </div>
+<!--        <div>-->
+<!--            <label for="passwordCheck" class="title">*비밀번호 확인</label>-->
+<!--            <div class="main">-->
+<!--            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" class="form-control"-->
+<!--                   th:errorclass="field-error" onkeyup="password_same()">-->
+<!--            <i class="fa fa-eye fa-lg"></i>-->
+<!--            </div>-->
+<!--            <span class="password-not-same">비밀번호 불일치</span>-->
+<!--            <span class="password-same">비밀번호 일치</span>-->
+<!--            <div class="field-error" th:errors="*{password}" />-->
+<!--        </div>-->
         <div>
             <label for="name" class="title">*이름</label>
             <input type="text" id="name" th:field="*{name}" class="form-control"
@@ -401,43 +401,43 @@
         </div>
         <div>
             <label for="zip_code" class="title">우편번호</label>
-            <input type="text" id="zip_code" th:field="*{zip_code}" class="form-control"
+            <input type="text" id="zip_code" th:field="*{zipcode}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_zipcode(this)">
             <span class="letter-error-zipcode">5글자만 입력</span> <!-- css수정 -->
             <span class="can-not-enter-zipcode">⦁숫자가 아닌 입력 감지</span>
             <div class="guide">
             <span class="zip-code-guide">⦁ 숫자만 입력가능</span>
             </div>
-            <div class="field-error" th:errors="*{zip_code}" />
+            <div class="field-error" th:errors="*{zipcode}" />
         </div>
         <div>
-            <label for="address1" class="title">주소 (시, 군, 구)</label>
-            <input type="text" id="address1" th:field="*{address1}" class="form-control"
+            <label for="address_one" class="title">주소 (시, 군, 구)</label>
+            <input type="text" id="address_one" th:field="*{address_one}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_address1(this)">
             <span class="can-not-enter-address1">⦁한글과 숫자로만 이루어진 주소만 입력해주세요</span>
-            <div class="field-error" th:errors="*{address1}" />
+<!--            <div class="field-error" th:errors="*{address_one}" />-->
             <div class="guide">
             <span class="address1-guide">⦁ 시, 군, 구 만 입력해주세요</span>
             </div>
         </div>
         <div>
-            <label for="address2" class="title">상세 주소</label>
-            <input type="text" id="address2" th:field="*{address2}" class="form-control"
+            <label for="address_two" class="title">상세 주소</label>
+            <input type="text" id="address_two" th:field="*{address_two}" class="form-control"
                    th:errorclass="field-error" onkeyup="check_address2(this)">
             <span class="can-not-enter-address2">⦁한글과 숫자로만 이루어진 주소만 입력해주세요</span>
             <div>
             <span class="address2-guide">⦁ 도로명주소, 지번, 동,호수로 이루어진 상세주소 입력해주세요</span>
             </div>
-            <div class="field-error" th:errors="*{address2}" />
+<!--            <div class="field-error" th:errors="*{address_two}" />-->
         </div>
         <div>
             <div class="title">*전화번호</div>
             <div class="flex-container-tel">
-            <input type="text" id="phoneNumber1" th:field="*{phoneNumber1}" class="tel1"
+            <input type="text" id="tel1" th:field="*{tel1}" class="tel1"
                    th:errorclass="field-error" onkeyup="check_phoneNumber(this)" size="4"/>&nbsp;-&nbsp;
-            <input type="text" id="phoneNumber2" class="tel2" th:field="*{phoneNumber2}"
+            <input type="text" id="tel2" class="tel2" th:field="*{tel2}"
                    th:errorclass="field-error" onkeyup="check_phoneNumber(this)" size="4"/>&nbsp;-&nbsp;
-            <input type="text" id="phoneNumber3" class="tel3" th:field="*{phoneNumber3}"
+            <input type="text" id="tel3" class="tel3" th:field="*{tel3}"
                    th:errorclass="field-error" onkeyup="check_phoneNumber(this)" size="4"/>
             </div>
 <!--            <span class="letter-error-tel">8글자 미만, 15글자 초과 </span> &lt;!&ndash; css수정 &ndash;&gt;-->
@@ -479,7 +479,7 @@
     var valid_address1 = true; //선택값은 true
     var valid_address2 = true;
     var valid_name = false; //필수
-    var valid_password_check = false; //필수
+    // var valid_password_check = false; //필수
     var valid_id = false; //필수
     var valid_zipcode = true;
     var valid_tel = false; //필수
@@ -490,9 +490,9 @@
     function check_phoneNumber(obj) {
         //정규식으로 특수문자 판별 /[a-z]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]/g;
         const regExp = /[a-zA-Zㄱ-ㅎㅏ-ㅣ]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]|\s/gi;
-        const number1 = $('#phoneNumber1').val(); //비밀번호
-        const number2 = $('#phoneNumber2').val(); //비밀번호 확인
-        const number3 = $('#phoneNumber3').val(); //비밀번호 확인
+        const number1 = $('#tel1').val(); //비밀번호
+        const number2 = $('#tel2').val(); //비밀번호 확인
+        const number3 = $('#tel3').val(); //비밀번호 확인
         // const phoneNumber = $('#phoneNumber').val(); //id값이 "id"인 입력란의 값을 저장
         //배열에서 하나씩 값을 비교
         if(  (number1 != '') && (number2 !='') && (number3 != '')  ) {
@@ -605,6 +605,7 @@
         const regExp = /[ㄱ-ㅎㅏ-ㅣ]|[ \{\}\[\]\/?,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
         const email1 = $('#email1').val(); //비밀번호
         const email2 = $('#email2').val(); //비밀번호 확인
+        let email = $('#email1').val() + $('#email1').val();
 
         if(  (email1 != '') && (email2 !='') ) {
             $('.can-not-enter-email1').css("display", "none");
@@ -657,28 +658,28 @@
         activeEvent();
     }
 
-    function password_same() {
-        const p1 = $('#password').val(); //비밀번호
-        const p2 = $('#passwordCheck').val(); //비밀번호 확인
-
-        if (p2 == '') {
-            $('.password-not-same').css("display", "none");
-            $('.password-same').css("display", "none");
-            valid_password_check = false;
-        } else if (p1 != p2) { //이와 같은 방식으로 여러 조건을 걸 수 있음
-            $('.password-not-same').css("display", "inline-block");
-            $('.password-same').css("display", "none");
-            valid_password_check = false;
-        } else {
-            $('.password-not-same').css("display", "none");
-            $('.password-same').css("display", "inline-block");
-            valid_password_check = true;
-        }
-        activeEvent(); //값이 입력 될 때마다 체크 되어야 하고, 조건에 부합하지 않을 시 비활성화 해야함으로
-    }
+    // function password_same() {
+    //     const p1 = $('#password').val(); //비밀번호
+    //     const p2 = $('#passwordCheck').val(); //비밀번호 확인
+    //
+    //     if (p2 == '') {
+    //         $('.password-not-same').css("display", "none");
+    //         $('.password-same').css("display", "none");
+    //         valid_password_check = false;
+    //     } else if (p1 != p2) { //이와 같은 방식으로 여러 조건을 걸 수 있음
+    //         $('.password-not-same').css("display", "inline-block");
+    //         $('.password-same').css("display", "none");
+    //         valid_password_check = false;
+    //     } else {
+    //         $('.password-not-same').css("display", "none");
+    //         $('.password-same').css("display", "inline-block");
+    //         valid_password_check = true;
+    //     }
+    //     activeEvent(); //값이 입력 될 때마다 체크 되어야 하고, 조건에 부합하지 않을 시 비활성화 해야함으로
+    // }
 
     function checkId(obj) {
-        const loginId = $('#loginId').val(); //id값이 "id"인 입력란의 값을 저장
+        const loginId = $('#login_id').val(); //id값이 "id"인 입력란의 값을 저장
         const regExp = /[ㄱ-ㅎㅏ-ㅣ]|[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
 
         // //배열에서 하나씩 값을 비교
@@ -711,7 +712,7 @@
             valid_id = false;
         }
         else if ( (loginId.length >= 5) && (!(regExp.test(obj.value))) ){
-            checkId2(); //ajax를 통해 실시간 검사하는 함수 호출
+            checkId2()
         }
         activeEvent();
 
@@ -753,10 +754,10 @@
     // };
 
     function checkId2() {
-        const loginId = $('#loginId').val(); //id값이 "id"인 입력란의 값을 저장
+        const loginId = $('#login_id').val(); //id값이 "id"인 입력란의 값을 저장
         // const regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;
         $.ajax({
-            url: './add/idCheck', //Controller에서 요청 받을 주소
+            url: '/members/add/idCheck', //Controller에서 요청 받을 주소
             type: 'post', //POST 방식으로 전달
             data: {loginId: loginId}, //바꾸어야함
             success: function (cnt) { //컨트롤러에서 넘어온 cnt값을 받는다
@@ -800,7 +801,39 @@
     // phoneNumberForm.addEventListener('keyup', activeEvent);
 
     function activeEvent() {
-        switch((valid_password && valid_email && valid_address1 && valid_address2 && valid_name && valid_password_check && valid_id && valid_zipcode && valid_tel && valid_tel_input && valid_email_input)){
+
+            // let loginId = $("#loginId").val();
+            // let password = $("#password").val();
+            // let name = $("#name").val();
+            // let email = $("#email1").val() + "@" + $("#email2").val();
+            // let address1 = $("#address1").val();
+            // let address2 = $("#address2").val();
+            // let tel = $("#tel1").val() + $("#tel2").val() + $("#tel3").val();
+            // let query = {loginId: loginId, password: password, name: name,
+            //     email: email, tel: tel , address1: address1,
+            //     zipcode: $("#zip_code").val(), address2: address2
+            // };
+            //
+            // $.ajax({
+            //     type: "POST",
+            //     url: + "/member/joinMember",
+            //     data: query,
+            //     success: function(data) {
+            //         let mid = data.trim();
+            //         if(mid == 'ok') {
+            //             alert("회원가입에 성공하였습니다.");
+            //             $("#id").val($("#jid").val());
+            //             window.location.href = ctx + "/#close";
+            //         }
+            //         else {
+            //             let explain = "회원가입에 실패 하였습니다. 다시 시도해 주십시요.";
+            //             alert(explain);
+            //         }
+            //     }
+            // });
+
+
+        switch((valid_password && valid_email && valid_address1 && valid_address2 && valid_name && valid_id && valid_zipcode && valid_tel && valid_tel_input && valid_email_input)){
             case true : loginButton.disabled = false; break;
             case false : loginButton.disabled = true; break;
         }
