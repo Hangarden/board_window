@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+        import javax.servlet.http.HttpSession;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -29,6 +31,14 @@ public class HomeController {
 //        model.addAttribute("member", loginMemberVO);
 //        return "loginHome";
 //    }
+    @GetMapping("/loginHome")
+    public String loginHome(HttpSession session, Model model) {
+        Object ob1 = session.getAttribute("SNAME");
+        String mySessionName = (String)ob1;
+    //세션이 유지되면 로그인으로 이동
+    model.addAttribute("name", mySessionName);
+    return "loginHome";
+    }
 
     @GetMapping("/")
     public String homeLoginV3ArgumentResolver() {

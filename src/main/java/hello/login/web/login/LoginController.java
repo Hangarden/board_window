@@ -19,18 +19,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-@Slf4j
-@Controller
-@RequiredArgsConstructor
-public class LoginController {
-
-//    private final LoginService loginService;
-    private final SessionManager sessionManager;
-
-    @GetMapping("/login")
-    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
-        return "login/loginForm";
-    }
+//@Slf4j
+//@Controller
+//@RequiredArgsConstructor
+//public class LoginController {
+//
+////    private final LoginService loginService;
+//    private final SessionManager sessionManager;
+//
+//    @GetMapping("/login")
+//    public String loginForm(@ModelAttribute("loginForm") LoginForm form) {
+//        return "login/loginForm";
+//    }
 
 
 //    @PostMapping("/login")
@@ -59,18 +59,18 @@ public class LoginController {
 //
 //    }
 
-    @PostMapping("/logout")
-    public String logoutV3(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        return "redirect:/";
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-    }
-}
+//    @PostMapping("/logout")
+//    public String logoutV3(HttpServletRequest request) {
+//        HttpSession session = request.getSession(false);
+//        if (session != null) {
+//            session.invalidate();
+//        }
+//        return "redirect:/";
+//    }
+//
+//    private void expireCookie(HttpServletResponse response, String cookieName) {
+//        Cookie cookie = new Cookie(cookieName, null);
+//        cookie.setMaxAge(0);
+//        response.addCookie(cookie);
+//    }
+//}

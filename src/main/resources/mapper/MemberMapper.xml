@@ -43,23 +43,35 @@
                 );
     </insert>
 
-    <insert id="combineEmail" parameterType="String">      <!-- id가 (interface) MemberMapper에 매핑시켜줌  -->
-    select
-        concat(email1, '@', email2)
-    as
-        email
-    from
-        member;
-    </insert>
+<!--    <select id="login" parameterType="String" resultType="Member">-->
+<!--        SELECT-->
+<!--            *-->
+<!--        FROM-->
+<!--            member-->
+<!--        WHERE-->
+<!--            login_id = #{login_id}-->
+<!--          AND-->
+<!--            password = #{password};-->
+<!--    </select>-->
 
-    <insert id="combineTel" parameterType="String">      <!-- id가 (interface) MemberMapper에 매핑시켜줌  -->
-        select
-            concat(tel1, '-', tel2, '-', tel3)
-        as
-            tel
-        from
-            member;
-    </insert>
+    <select id="selectMember" parameterType="String" resultType="Member">
+        /*회원별 회원정보 조회*/
+        SELECT
+            m.login_id
+             ,m.password
+             ,m.name
+             ,m.email1
+             ,m.zipcode
+             ,m.address_one
+             ,m.address_two
+             ,m.tel1
+        FROM
+            member AS m
+        WHERE
+            m.login_id = #{login_id};
+    </select>
+
+
 
 
 </mapper>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<script
+        src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+        crossorigin="anonymous"></script>
+<!-- 사용자 정의 title -->
+<th:block layout:fragment="customTitle">
+  <title th:text="${title}"></title>
+</th:block>
+
+<th:block layout:fragment="customScript">
+  <script>
+    $(function(){
+      function validationCheck(data){
+        if(typeof data == 'undefined' || data == '' || data == null){
+          return false;
+        }
+        return true;
+      }
+
+      $('#loginBtn').click(function(){
+
+        let isSubmit = true;
+        let inputObj = $('#loginForm').find('input');
+
+        $.each(inputObj, function(){
+          let inputId = $(this).attr('id');
+          let inputLabel = $('label[for="'+ inputId +'"]').text();
+          let inputData = $(this).val();
+          let result = validationCheck(inputData);
+
+
+          //사용자가 입력하지 않은 경우
+          if(!result){
+            alert(inputLabel + '을 입력해주세요.');
+            $(this).focus();
+            isSubmit = false;
+            return false;
+          }
+        })
+
+        if(isSubmit) $('#loginForm').submit();
+      });
+    });
+  </script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+  <form id="loginForm" th:action="@{/members/login}" method="post" >
+    <table border="1">
+      <tbody>
+      <tr>
+        <td><label for="login_id">회원아이디</label></td>
+        <td>
+          <input type="text" name="login_id" id="login_id">
+        </td>
+      </tr>
+      <tr>
+        <td><label for="password">회원비밀번호</label></td>
+        <td>
+          <input type="password" name="password" id="password">
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2">
+          <button id="loginBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >로그인</button>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+    <div th:if="${not #strings.isEmpty(result)}">
+      <p th:text="${result}" style="color:red;"></p>
+    </div>
+  </form>
+</th:block>
+</html>

@@ -14,4 +14,9 @@ public interface MemberMapper {
 
     void combineTel(String tel1, String tel2, String tel3);
 
+//    Member login(String memberId, String memberPw);
+
+    //회원별 회원정보 조회
+    Member selectMember(String memberId);
+
 }
