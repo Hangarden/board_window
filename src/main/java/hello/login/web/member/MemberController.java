@@ -81,6 +81,14 @@ public class MemberController {
         return "redirect:/member/login";
     }
 
+    /**
+     * 로그아웃
+     */
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 
     //아이디 중복체크
     @PostMapping("add/idCheck")
@@ -91,7 +99,6 @@ public class MemberController {
         return cnt;
 
     }
-
 
 
 }

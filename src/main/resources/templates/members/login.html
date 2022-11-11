@@ -2,6 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+  body {
+    min-height: 100vh;
+
+    background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
+    background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+    background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+    background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
+    background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+  }
+/*js 경로 복사*/
+  #loginForm > table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .input-form {
+    max-width: 680px;
+
+    margin-top: 80px;
+    padding: 32px;
+
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+  }
+
+  .container {
+    max-width: 560px;
+  }
+
+</style>
 <script
         src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -46,8 +85,12 @@
       });
     });
   </script>
-</th:block>
 
+
+</th:block>
+<body>
+<div class="input-form-backgroud row">
+  <div class="input-form col-md-12 mx-auto">
 <th:block layout:fragment="customContents">
   <form id="loginForm" th:action="@{/members/login}" method="post" >
     <table border="1">
@@ -78,4 +121,7 @@
     </div>
   </form>
 </th:block>
+  </div> <!-- /container -->
+</div>
+</body>
 </html>
