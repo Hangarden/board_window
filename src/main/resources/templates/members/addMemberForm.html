@@ -363,17 +363,17 @@
             </div>
             <div class="field-error" th:errors="*{password}" />
         </div>
-<!--        <div>-->
-<!--            <label for="passwordCheck" class="title">*비밀번호 확인</label>-->
-<!--            <div class="main">-->
-<!--            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" class="form-control"-->
-<!--                   th:errorclass="field-error" onkeyup="password_same()">-->
-<!--            <i class="fa fa-eye fa-lg"></i>-->
-<!--            </div>-->
-<!--            <span class="password-not-same">비밀번호 불일치</span>-->
-<!--            <span class="password-same">비밀번호 일치</span>-->
-<!--            <div class="field-error" th:errors="*{password}" />-->
-<!--        </div>-->
+        <div>
+            <label for="passwordCheck" class="title">*비밀번호 확인</label>
+            <div class="main">
+            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" class="form-control"
+                   th:errorclass="field-error" onkeyup="password_same()">
+            <i class="fa fa-eye fa-lg"></i>
+            </div>
+            <span class="password-not-same">비밀번호 불일치</span>
+            <span class="password-same">비밀번호 일치</span>
+            <div class="field-error" th:errors="*{password}" />
+        </div>
         <div>
             <label for="name" class="title">*이름</label>
             <input type="text" id="name" th:field="*{name}" class="form-control"
@@ -479,7 +479,7 @@
     var valid_address1 = true; //선택값은 true
     var valid_address2 = true;
     var valid_name = false; //필수
-    // var valid_password_check = false; //필수
+    var valid_password_check = false; //필수
     var valid_id = false; //필수
     var valid_zipcode = true;
     var valid_tel = false; //필수
@@ -550,16 +550,16 @@
 // "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 
         if (password.length <= 7) {
-            $('.letter-error-zipcode').css("display", "inline-block");
-            valid_zipcode = false;
+            $('.letter-error-password').css("display", "inline-block");
+            valid_password = false;
         }
         else if(  (password.length >=8) && (pattern.test(obj.value)) ) {
             $('.space-detect').css("display", "inline-block");
-            $('.letter-error-zipcode').css("display", "none");
+            $('.letter-error-password').css("display", "none");
             valid_password = false;
         } else if(  (password.length >=8) && (!(pattern.test(obj.value))) ){
             $('.space-detect').css("display", "none");
-            $('.letter-error-zipcode').css("display", "none");
+            $('.letter-error-password').css("display", "none");
             valid_password = true;
         }
         activeEvent();
@@ -570,7 +570,11 @@
         const regExp = /[a-zA-Z]|[\[\]{}()<>?|`~!@#$%^&*-+=,.;:\"'\\]|\s/g;
         const zipcode = $('#zip_code').val();
 
-        if (zipcode.length != 5) {
+        if ((zipcode == '') || (zipcode == null)) {
+            $('.letter-error-zipcode').css("display", "none");
+            valid_zipcode = true;
+        }
+        else if (zipcode.length < 5) {
             $('.letter-error-zipcode').css("display", "inline-block");
             valid_zipcode = false;
         }
@@ -658,25 +662,25 @@
         activeEvent();
     }
 
-    // function password_same() {
-    //     const p1 = $('#password').val(); //비밀번호
-    //     const p2 = $('#passwordCheck').val(); //비밀번호 확인
-    //
-    //     if (p2 == '') {
-    //         $('.password-not-same').css("display", "none");
-    //         $('.password-same').css("display", "none");
-    //         valid_password_check = false;
-    //     } else if (p1 != p2) { //이와 같은 방식으로 여러 조건을 걸 수 있음
-    //         $('.password-not-same').css("display", "inline-block");
-    //         $('.password-same').css("display", "none");
-    //         valid_password_check = false;
-    //     } else {
-    //         $('.password-not-same').css("display", "none");
-    //         $('.password-same').css("display", "inline-block");
-    //         valid_password_check = true;
-    //     }
-    //     activeEvent(); //값이 입력 될 때마다 체크 되어야 하고, 조건에 부합하지 않을 시 비활성화 해야함으로
-    // }
+    function password_same() {
+        const p1 = $('#password').val(); //비밀번호
+        const p2 = $('#passwordCheck').val(); //비밀번호 확인
+
+        if (p2 == '') {
+            $('.password-not-same').css("display", "none");
+            $('.password-same').css("display", "none");
+            valid_password_check = false;
+        } else if (p1 != p2) { //이와 같은 방식으로 여러 조건을 걸 수 있음
+            $('.password-not-same').css("display", "inline-block");
+            $('.password-same').css("display", "none");
+            valid_password_check = false;
+        } else {
+            $('.password-not-same').css("display", "none");
+            $('.password-same').css("display", "inline-block");
+            valid_password_check = true;
+        }
+        activeEvent(); //값이 입력 될 때마다 체크 되어야 하고, 조건에 부합하지 않을 시 비활성화 해야함으로
+    }
 
     function checkId(obj) {
         const loginId = $('#login_id').val(); //id값이 "id"인 입력란의 값을 저장

@@ -10,4 +10,8 @@ public interface MemberMapper {
 
     int addMember(Member member);
 
+    void combineEmail(String email1, String email2);
+
+    void combineTel(String tel1, String tel2, String tel3);
+
 }

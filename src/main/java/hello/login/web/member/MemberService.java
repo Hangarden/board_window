@@ -26,6 +26,16 @@ public class MemberService {
         return cnt;
     }
 
+    public void combineEmail(String email1, String email2) {
+        mapper.combineEmail(email1, email2);
+
+    }
+
+    public void combineTel(String tel1, String tel2, String tel3) {
+        mapper.combineTel(tel1, tel2, tel3);
+
+    }
+
 //    public int addMember(MemberCreateForm member) {
 //        int result = mapper.addMember(member);
 //        return result;

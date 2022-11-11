@@ -15,6 +15,7 @@ public class Member {
     private String login_id; //로그인 ID
     private String name; //사용자 이름
     private String password;
+    private String passwordCheck;
     private String email1;
     private String email2;
     private String zipcode;

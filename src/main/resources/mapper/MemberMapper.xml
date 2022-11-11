@@ -27,26 +27,38 @@
         , password
         , name
         , email1
-        , email2
         , zipcode
         , address_one
         , address_two
         , tel1
-        , tel2
-        , tel3
         )VALUES (
                     #{login_id}
                 , #{password}
                 , #{name}
-                , #{email1}
-                , #{email2}
+                , #{email1} '@' #{email2}
                 , #{zipcode}
                 , #{address_one}
                 , #{address_two}
-                , #{tel1}
-                , #{tel2}
-                , #{tel3}
+                , #{tel1} '-' #{tel2} '-' #{tel3}
                 );
+    </insert>
+
+    <insert id="combineEmail" parameterType="String">      <!-- id가 (interface) MemberMapper에 매핑시켜줌  -->
+    select
+        concat(email1, '@', email2)
+    as
+        email
+    from
+        member;
+    </insert>
+
+    <insert id="combineTel" parameterType="String">      <!-- id가 (interface) MemberMapper에 매핑시켜줌  -->
+        select
+            concat(tel1, '-', tel2, '-', tel3)
+        as
+            tel
+        from
+            member;
     </insert>
 
 

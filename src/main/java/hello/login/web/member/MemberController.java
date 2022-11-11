@@ -58,9 +58,25 @@ public class MemberController {
     public String addMember(Member member) {
 //        log.info("회원가입폼에서 입력받은 데이터: {}", member);
         memberService.addMember(member);
-
+//        String email1 = member.getEmail1();
+//        String email2 = member.getEmail2();
+//        String email3 = member.getEmail3();
+//        String tel1 = member.getTel1();
+//        String tel2 = member.getTel1();
+//        String tel3 = member.getTel1();
+//        memberService.combineTel(tel1, tel2, tel3);
         return "redirect:/";
     }
+
+//    @PostMapping("/add/combine")
+//    public String combineInput(Member member) {
+////        log.info("회원가입폼에서 입력받은 데이터: {}", member);
+//        memberService.addMember(member);
+//
+//
+//        return "redirect:/";
+//    }
+
 
     //아이디 중복체크
     @PostMapping("add/idCheck")
