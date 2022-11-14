@@ -26,11 +26,11 @@
         (	  login_id
         , password
         , name
-        , email1
-        , zipcode
-        , address_one
-        , address_two
-        , tel1
+        , email
+        , zip_code
+        , address1
+        , address2
+        , phone_number
         )VALUES (
                     #{login_id}
                 , #{password}
@@ -60,11 +60,11 @@
             m.login_id
              ,m.password
              ,m.name
-             ,m.email1
-             ,m.zipcode
-             ,m.address_one
-             ,m.address_two
-             ,m.tel1
+             ,m.email
+             ,m.zip_code
+             ,m.address1
+             ,m.address2
+             ,m.phone_number
         FROM
             member AS m
         WHERE

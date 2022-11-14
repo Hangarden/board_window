@@ -70,7 +70,7 @@ public class MemberController {
 
             session.setAttribute("SID", loginId);
             System.out.printf("{}", loginId);
-            session.setAttribute("SNAME", sessionName);
+            session.setAttribute("NAME", sessionName);
             System.out.printf("{}", sessionName);
 
             return "redirect:/loginHome";

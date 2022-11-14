@@ -38,10 +38,11 @@
                         <td colspan="3"><input type="text" id="title" name="title" maxlength="50" placeholder="제목을 입력해 주세요." /></td>
                     </tr>
 
-                    <tr>
-                        <th>이름 <span class="es">필수 입력</span></th>
-                        <td colspan="3"><input type="text" id="writer" name="writer" maxlength="10" placeholder="이름을 입력해 주세요." /></td>
-                    </tr>
+<!--                    <tr>-->
+<!--                        <th>이름 <span class="es">필수 입력</span></th>-->
+<!--                        <td colspan="3"><input type="hideen" id="writer" name="writer" readonly/></td>-->
+<!--                    </tr>-->
+
 
                     <tr>
                         <th>내용 <span class="es">필수 입력</span></th>
@@ -68,8 +69,17 @@
         //     자바스크립트를 사용할 수 있습니다.
         /*<![CDATA[*/
 
+        // window.onload = () => {
+        //     initCreatedDate();
+        // }
+        //
+        //
+        // // 등록일 초기화
+        // function initCreatedDate() {
+        //     document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
+        // }
         window.onload = () => {
-            initCreatedDate();
+            renderPostInfo();
         }
 
 
@@ -79,18 +89,36 @@
         }
 
 
+        // 게시글 상세정보 렌더링
+        function renderPostInfo() {
+            const post = [[ ${post} ]];
+
+            if ( !post ) {
+                initCreatedDate();
+                return false;
+            }
+            const form = document.getElementById('saveForm');
+            const fields = ['id', 'title', 'content', 'writer'];
+            form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
+
+            fields.forEach(field => {
+                form[field].value = post[field];
+            })
+        }
+
+
         // 게시글 저장(수정)
         function savePost() {
             const form = document.getElementById('saveForm');
-            const fields = [form.title, form.writer, form.content];
-            const fieldNames = ['제목', '이름', '내용'];
+            const fields = [form.title, form.content];
+            const fieldNames = ['제목', '내용'];
 
             for (let i = 0, len = fields.length; i < len; i++) {
                 isValid(fields[i], fieldNames[i]);
             }
 
             document.getElementById('saveBtn').disabled = true;
-            form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do';
+            form.action = [[ ${post == null} ]] ? '/posts/save.do' : '/post/update.do';
             form.submit();
         }
 
