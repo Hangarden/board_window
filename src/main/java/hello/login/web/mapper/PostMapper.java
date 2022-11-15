@@ -50,4 +50,6 @@ public interface PostMapper {
      */
     int count(SearchDto params);
 
+    int updateCnt(Long id);
+
 }

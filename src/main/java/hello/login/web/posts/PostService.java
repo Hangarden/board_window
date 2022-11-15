@@ -60,6 +60,11 @@ public class PostService {
         return id;
     }
 
+    // 조회수 올리기
+    public int updateCnt(Long id)  {
+        return postMapper.updateCnt(id);
+    }
+
     /**
      * 게시글 리스트 조회
      * @param params - search conditions
@@ -67,15 +72,22 @@ public class PostService {
      */
     public PagingResponse<PostResponse> findAllPost(final SearchDto params) {
         int count = postMapper.count(params);
-        if (count < 1) {
-            return new PagingResponse<>(Collections.emptyList(), null);
-        }
-
         Pagination pagination = new Pagination(count, params);
         params.setPagination(pagination);
 
         List<PostResponse> list = postMapper.findAll(params);
         return new PagingResponse<>(list, pagination);
     }
+        //        int count = postMapper.count(params);
+//        if (count < 1) {
+//            return new PagingResponse<>(Collections.emptyList(), null);
+//        }
+//
+//        Pagination pagination = new Pagination(count, params);
+//        params.setPagination(pagination);
+//
+//        List<PostResponse> list = postMapper.findAll(params);
+//        return new PagingResponse<>(list, pagination);
+//    }
 
 }

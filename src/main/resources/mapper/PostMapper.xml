@@ -33,6 +33,16 @@
     )
     </insert>
 
+    <!-- 조회수 올리기 -->
+    <update id="updateCnt">
+        update
+            tb_post
+        set
+            view_cnt = view_cnt + 1
+        where
+            id = #{id}
+    </update>
+
 
             <!-- 게시글 상세정보 조회 -->
     <select id="findById" parameterType="long" resultType="PostResponse">

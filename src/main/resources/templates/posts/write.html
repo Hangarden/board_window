@@ -5,101 +5,69 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<!--    페이지 마다 컨텐츠의 영역의 형태가 다름으로 layout fragment 사용-->
-    <div class="page_tits">
-        <h3>게시판 관리</h3>
-        <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>글작성</span></p>
+    <div class="card-content">
+        <form id="saveForm" class="form-horizontal" method="post" autocomplete="off">
+            <!--/* 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(id) */-->
+            <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
+
+            <!--/* 서버로 전달할 공지 여부 */-->
+<!--            <input type="hidden" id="noticeYn" name="noticeYn" />-->
+
+<!--            <div class="form-group">-->
+<!--                <label for="isNotice" class="col-sm-2 control-label">공지글 설정</label>-->
+<!--                <div class="col-sm-10" style="margin-top: 10px;">-->
+<!--                    <input type="checkbox" id="isNotice" name="isNotice" />-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">제목</label>
+                <div class="col-sm-10">
+                    <input type="text" id="title" name="title" class="form-control" maxlength="50" placeholder="제목을 입력해 주세요." />
+                </div>
+            </div>
+
+<!--            <div class="form-group">-->
+<!--                <label for="writer" class="col-sm-2 control-label">이름</label>-->
+<!--                <div class="col-sm-10">-->
+<!--                    <input type="text" id="writer" name="writer" class="form-control" maxlength="10" placeholder="이름을 입력해 주세요." />-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="form-group">
+                <label for="content" class="col-sm-2 control-label">내용</label>
+                <div class="col-sm-10">
+                    <textarea id="content" name="content" class="form-control" maxlength="1000" placeholder="내용을 입력해 주세요."></textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="btn_wrap text-center">
+            <a href="javascript: void(0);" onclick="goListPage();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+            <button type="button" class="btn btn-primary waves-effect waves-light" onclick="savePost();">저장하기</button>
+        </div>
     </div>
-
-    <div class="content">
-        <section>
-            <form id="saveForm" method="post" autocomplete="off">
-                <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
-                <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
-<!--                GET은 데이터의 조회를 의미하고, POST는 데이터의 생성을 의미합니다.-->
-
-<!--                예를 들어, 특정 게시글 또는 게시글 목록을 조회하는 SELECT와 같은 행위는-->
-
-<!--                GET 방식으로 처리되어야 하며, 게시글의 생성 또는 수정을 의미하는-->
-
-<!--                INSERT, UPDATE와 같은 행위는 POST 방식으로 처리되어야 합니다.-->
-                <!--/* 서버로 전달할 공지글 여부 */-->
-                    <colgroup>
-                        <col style="width:15%;" /><col style="width:35%;" /><col style="width:15%;" /><col style="width:35%;" />
-                    </colgroup>
-                    <tbody>
-                    <tr>
-                        <th scope="row">등록일</th>
-                        <td colspan="3"><input type="text" id="createdDate" name="createdDate" readonly /></td>
-                    </tr>
-
-                    <tr>
-                        <th>제목 <span class="es">필수 입력</span></th>
-                        <td colspan="3"><input type="text" id="title" name="title" maxlength="50" placeholder="제목을 입력해 주세요." /></td>
-                    </tr>
-
-<!--                    <tr>-->
-<!--                        <th>이름 <span class="es">필수 입력</span></th>-->
-<!--                        <td colspan="3"><input type="hideen" id="writer" name="writer" readonly/></td>-->
-<!--                    </tr>-->
-
-
-                    <tr>
-                        <th>내용 <span class="es">필수 입력</span></th>
-                        <td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </form>
-            <p class="btn_set">
-                <button type="button" id="saveBtn" onclick="savePost();" class="btns btn_st3 btn_mid">저장</button>
-                <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
-            </p>
-        </section>
-    </div> <!--/* .content */-->
 </th:block>
 
-<!--자바스크립트도 마찬가지로 페이지마다 로직이 다르기 때문에-->
-
-<!--layout:fragment를 이용합니다.-->
 <th:block layout:fragment="script">
     <script th:inline="javascript">
-        // <script> 태그에 th:inline 속성을 javascript로 지정해야
-        //
-        //     자바스크립트를 사용할 수 있습니다.
         /*<![CDATA[*/
 
-        // window.onload = () => {
-        //     initCreatedDate();
-        // }
-        //
-        //
-        // // 등록일 초기화
-        // function initCreatedDate() {
-        //     document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
-        // }
         window.onload = () => {
             renderPostInfo();
-        }
-
-
-        // 등록일 초기화
-        function initCreatedDate() {
-            document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');
         }
 
 
         // 게시글 상세정보 렌더링
         function renderPostInfo() {
             const post = [[ ${post} ]];
-
             if ( !post ) {
-                initCreatedDate();
                 return false;
             }
+
             const form = document.getElementById('saveForm');
-            const fields = ['id', 'title', 'content', 'writer'];
-            form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');
+            const fields = ['id', 'title', 'content'];
+            // form.isNotice.checked = post.noticeYn;
 
             fields.forEach(field => {
                 form[field].value = post[field];
@@ -114,15 +82,161 @@
             const fieldNames = ['제목', '내용'];
 
             for (let i = 0, len = fields.length; i < len; i++) {
-                isValid(fields[i], fieldNames[i]);
+                if ( !isValid(fields[i], fieldNames[i]) ) {
+                    return false;
+                }
             }
 
-            document.getElementById('saveBtn').disabled = true;
+            new URLSearchParams(location.search).forEach((value, key) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = value;
+                form.append(input);
+            })
+
             form.action = [[ ${post == null} ]] ? '/posts/save.do' : '/post/update.do';
             form.submit();
+        }
+
+
+        // 게시글 리스트 페이지로 이동
+        function goListPage() {
+            const queryString = new URLSearchParams(location.search);
+            queryString.delete('id');
+            location.href = '/post/list.do' + '?' + queryString.toString();
         }
 
         /*]]>*/
     </script>
 </th:block>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">-->
+<!--<th:block layout:fragment="title">-->
+<!--    <title>글작성 페이지</title>-->
+<!--</th:block>-->
+
+<!--<th:block layout:fragment="content">-->
+<!--&lt;!&ndash;    페이지 마다 컨텐츠의 영역의 형태가 다름으로 layout fragment 사용&ndash;&gt;-->
+<!--    <div class="page_tits">-->
+<!--        <h3>게시판 관리</h3>-->
+<!--        <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>글작성</span></p>-->
+<!--    </div>-->
+
+<!--    <div class="content">-->
+<!--        <section>-->
+<!--            <form id="saveForm" method="post" autocomplete="off">-->
+<!--                &lt;!&ndash;/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */&ndash;&gt;-->
+<!--                <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />-->
+<!--&lt;!&ndash;                GET은 데이터의 조회를 의미하고, POST는 데이터의 생성을 의미합니다.&ndash;&gt;-->
+
+<!--&lt;!&ndash;                예를 들어, 특정 게시글 또는 게시글 목록을 조회하는 SELECT와 같은 행위는&ndash;&gt;-->
+
+<!--&lt;!&ndash;                GET 방식으로 처리되어야 하며, 게시글의 생성 또는 수정을 의미하는&ndash;&gt;-->
+
+<!--&lt;!&ndash;                INSERT, UPDATE와 같은 행위는 POST 방식으로 처리되어야 합니다.&ndash;&gt;-->
+<!--                &lt;!&ndash;/* 서버로 전달할 공지글 여부 */&ndash;&gt;-->
+<!--                    <colgroup>-->
+<!--                        <col style="width:15%;" /><col style="width:35%;" /><col style="width:15%;" /><col style="width:35%;" />-->
+<!--                    </colgroup>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                        <th scope="row">등록일</th>-->
+<!--                        <td colspan="3"><input type="text" id="createdDate" name="createdDate" readonly /></td>-->
+<!--                    </tr>-->
+
+<!--                    <tr>-->
+<!--                        <th>제목 <span class="es">필수 입력</span></th>-->
+<!--                        <td colspan="3"><input type="text" id="title" name="title" maxlength="50" placeholder="제목을 입력해 주세요." /></td>-->
+<!--                    </tr>-->
+
+<!--&lt;!&ndash;                    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <th>이름 <span class="es">필수 입력</span></th>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <td colspan="3"><input type="hideen" id="writer" name="writer" readonly/></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </tr>&ndash;&gt;-->
+
+
+<!--                    <tr>-->
+<!--                        <th>내용 <span class="es">필수 입력</span></th>-->
+<!--                        <td colspan="3"><textarea id="content" name="content" cols="50" rows="10" placeholder="내용을 입력해 주세요."></textarea></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </form>-->
+<!--            <p class="btn_set">-->
+<!--                <button type="button" id="saveBtn" onclick="savePost();" class="btns btn_st3 btn_mid">저장</button>-->
+<!--                <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>-->
+<!--            </p>-->
+<!--        </section>-->
+<!--    </div> &lt;!&ndash;/* .content */&ndash;&gt;-->
+<!--</th:block>-->
+
+<!--&lt;!&ndash;자바스크립트도 마찬가지로 페이지마다 로직이 다르기 때문에&ndash;&gt;-->
+
+<!--&lt;!&ndash;layout:fragment를 이용합니다.&ndash;&gt;-->
+<!--<th:block layout:fragment="script">-->
+<!--    <script th:inline="javascript">-->
+<!--        // <script> 태그에 th:inline 속성을 javascript로 지정해야-->
+<!--        //-->
+<!--        //     자바스크립트를 사용할 수 있습니다.-->
+<!--        /*<![CDATA[*/-->
+
+<!--        // window.onload = () => {-->
+<!--        //     initCreatedDate();-->
+<!--        // }-->
+<!--        //-->
+<!--        //-->
+<!--        // // 등록일 초기화-->
+<!--        // function initCreatedDate() {-->
+<!--        //     document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');-->
+<!--        // }-->
+<!--        window.onload = () => {-->
+<!--            renderPostInfo();-->
+<!--        }-->
+
+
+<!--        // // 등록일 초기화-->
+<!--        // function initCreatedDate() {-->
+<!--        //     document.getElementById('createdDate').value = dayjs().format('YYYY-MM-DD');-->
+<!--        // }-->
+
+
+<!--        // 게시글 상세정보 렌더링-->
+<!--        function renderPostInfo() {-->
+<!--            const post = [[ ${post} ]];-->
+
+<!--            if ( !post ) {-->
+<!--                initCreatedDate();-->
+<!--                return false;-->
+<!--            }-->
+<!--            const form = document.getElementById('saveForm');-->
+<!--            const fields = ['id', 'title', 'content', 'writer'];-->
+<!--            form.createdDate.value = dayjs(post.createdDate).format('YYYY-MM-DD HH:mm');-->
+
+<!--            fields.forEach(field => {-->
+<!--                form[field].value = post[field];-->
+<!--            })-->
+<!--        }-->
+
+
+<!--        // 게시글 저장(수정)-->
+<!--        function savePost() {-->
+<!--            const form = document.getElementById('saveForm');-->
+<!--            const fields = [form.title, form.content];-->
+<!--            const fieldNames = ['제목', '내용'];-->
+
+<!--            for (let i = 0, len = fields.length; i < len; i++) {-->
+<!--                isValid(fields[i], fieldNames[i]);-->
+<!--            }-->
+
+<!--            document.getElementById('saveBtn').disabled = true;-->
+<!--            form.action = [[ ${post == null} ]] ? '/posts/save.do' : '/post/update.do';-->
+<!--            form.submit();-->
+<!--        }-->
+
+<!--        /*]]>*/-->
+<!--    </script>-->
+<!--</th:block>-->
+<!--</html>-->
