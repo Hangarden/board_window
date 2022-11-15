@@ -36,6 +36,7 @@ public class PostController {
     // 신규 게시글 생성
     @PostMapping("/posts/save.do")
     public String savePost(final PostRequest params, HttpSession session, Model model) {
+            params.removeTag();
             Object ob1 = session.getAttribute("NAME");
             String mySessionName = (String)ob1;
             params.setWriter(mySessionName);
