@@ -1264,7 +1264,7 @@ Version 1.0
 .table > tfoot > tr > th.text-left,
 .table > thead > tr > td.text-left,
 .table > thead > tr > th.text-left {
-    text-align: left;
+    text-align: center;
 }
 .table > tbody > tr > td > a,
 .table > tbody > tr > th > a,

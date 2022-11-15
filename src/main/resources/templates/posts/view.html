@@ -1,53 +1,83 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
 <th:block layout:fragment="title">
-  <title>상세 페이지</title>
+  <title>this is view page</title>
 </th:block>
 
 <th:block layout:fragment="content">
-  <div class="page_tits">
-    <h3>게시판 관리</h3>
-    <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>상세정보</span></p>
+  <div class="card-content">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">제목</label>
+      <div class="col-sm-10">
+        <p class="form-control" id="title" th:text="${post.title}"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">이름</label>
+      <div class="col-sm-10">
+        <p class="form-control" id="writer" th:text="${post.writer}"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">내용</label>
+      <div class="col-sm-10">
+        <p class="form-control" id="content" th:text="${post.content}"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">등록일</label>
+      <div class="col-sm-10">
+        <p class="form-control" th:text="*{#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm:ss' )}"></p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">조회 수</label>
+      <div class="col-sm-10">
+        <p class="form-control" id="viewCnt" th:text="${post.viewCnt}"></p>
+      </div>
+    </div>
+
+    <div class="btn_wrap text-center">
+      <a href="javascript: void(0);" onclick="goListPage();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+      <a href="javascript: void(0);" onclick="goWritePage();" class="btn btn-primary waves-effect waves-light">수정하기</a>
+      <button type="button" class="btn btn-danger waves-effect waves-light" onclick="deletePost();">삭제하기</button>
+    </div>
   </div>
+</th:block>
 
-  <div class="content">
-    <section>
-      <table class="tb tb_row">
-        <colgroup>
-          <col style="width:10%;" /><col style="width:23%;" /><col style="width:10%;" /><col style="width:23%;" />
-        </colgroup>
-        <tbody>
-        <tr>
-          <th scope="row">글 유형</th>
-<!--          <td th:text="${post.noticeYn == false ? '일반' : '공지'}"></td>-->
+<th:block layout:fragment="add-content">
+  <div class="box-content">
+    <div class="card-content">
+      <div class="clearfix">
+        <h4 class="box-title pull-left">Comment</h4>
+      </div>
 
-          <th scope="row">등록일</th>
-          <td th:text="${#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
-        </tr>
-        <tr>
-          <th scope="row">제목</th>
-          <td>[[ ${post.title} ]]</td>
-
-          <th scope="row">조회</th>
-          <td colspan="3">[[ ${post.viewCnt} ]]</td>
-        </tr>
-        <tr>
-          <th scope="row">이름</th>
-          <td colspan="3">[[ ${post.writer} ]]</td>
-        </tr>
-        <tr>
-          <th scope="row">내용</th>
-          <td colspan="3">[[ ${post.content} ]]</td>
-        </tr>
-        </tbody>
-      </table>
-      <p class="btn_set">
-        <a th:href="@{/posts/write.do( id=${post.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
-        <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
-        <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
-      </p>
-    </section>
-  </div> <!--/* .content */-->
+      <form class="form-horizontal form-view">
+        <div class="input-group margin-bottom-20">
+          <input type="email" class="form-control" placeholder="">
+          <div class="input-group-btn"><button type="button" class="btn waves-effect waves-light"><i class="fa fa-commenting" aria-hidden="true"></i></button></div>
+        </div>
+        <ul class="notice-list">
+          <li>
+            <span class="name">Betty Simmons</span>
+            <span class="desc">There are new settings available</span>
+            <span class="time">2019.03.26</span>
+            <button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+          </li>
+          <li>
+            <span class="name">Betty Kim</span>
+            <span class="desc">There are new settings available</span>
+            <span class="time">2019.03.15</span>
+            <button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>
 </th:block>
 
 <th:block layout:fragment="script">
@@ -57,24 +87,124 @@
     // 게시글 삭제
     function deletePost() {
       const id = [[ ${post.id} ]];
-
-      if ( !confirm( '게시글을 삭제할까요?') ) {
+      if ( !confirm(id + "번 게시글을 삭제할까요?") ) {
         return false;
       }
 
+      let inputHtml = '';
+
+      new URLSearchParams(location.search).forEach((value, key) => {
+        inputHtml += `<input type="hidden" name="${key}" value="${value}" />`;
+      })
+
       const formHtml = `
-          <form id="deleteForm" action="/post/delete.do" method="post">
-              <input type="hidden" id="id" name="id" value="${id}" />
-          </form>
-      `;
+                    <form id="deleteForm" action="/post/delete.do" method="post">
+                        ${inputHtml}
+                    </form>
+                `;
+
       const doc = new DOMParser().parseFromString(formHtml, 'text/html');
       const form = doc.body.firstChild;
       document.body.append(form);
       document.getElementById('deleteForm').submit();
     }
 
+
+    // 게시글 리스트 페이지로 이동
+    function goListPage() {
+      const queryString = new URLSearchParams(location.search);
+      queryString.delete('id');
+      location.href = '/post/list.do' + '?' + queryString.toString();
+    }
+
+
+    // 게시글 수정 페이지로 이동
+    function goWritePage() {
+      location.href = '/posts/write.do' + location.search;
+    }
+
     /*]]>*/
   </script>
 </th:block>
-
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">-->
+<!--<th:block layout:fragment="title">-->
+<!--  <title>상세 페이지</title>-->
+<!--</th:block>-->
+
+<!--<th:block layout:fragment="content">-->
+<!--  <div class="page_tits">-->
+<!--    <h3>게시판 관리</h3>-->
+<!--    <p class="path"><strong>현재 위치 :</strong> <span>게시판 관리</span> <span>리스트형</span> <span>상세정보</span></p>-->
+<!--  </div>-->
+
+<!--  <div class="content">-->
+<!--    <section>-->
+<!--      <table class="tb tb_row">-->
+<!--        <colgroup>-->
+<!--          <col style="width:10%;" /><col style="width:23%;" /><col style="width:10%;" /><col style="width:23%;" />-->
+<!--        </colgroup>-->
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--          <th scope="row">글 유형</th>-->
+<!--&lt;!&ndash;          <td th:text="${post.noticeYn == false ? '일반' : '공지'}"></td>&ndash;&gt;-->
+
+<!--          <th scope="row">등록일</th>-->
+<!--          <td th:text="${#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">제목</th>-->
+<!--          <td>[[ ${post.title} ]]</td>-->
+
+<!--          <th scope="row">조회</th>-->
+<!--          <td colspan="3">[[ ${post.viewCnt} ]]</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">이름</th>-->
+<!--          <td colspan="3">[[ ${post.writer} ]]</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th scope="row">내용</th>-->
+<!--          <td colspan="3">[[ ${post.content} ]]</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--      <p class="btn_set">-->
+<!--        <a th:href="@{/posts/write.do( id=${post.id} )}" class="btns btn_bdr4 btn_mid">수정</a>-->
+<!--        <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>-->
+<!--        <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>-->
+<!--      </p>-->
+<!--    </section>-->
+<!--  </div> &lt;!&ndash;/* .content */&ndash;&gt;-->
+<!--</th:block>-->
+
+<!--<th:block layout:fragment="script">-->
+<!--  <script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+
+<!--    // 게시글 삭제-->
+<!--    function deletePost() {-->
+<!--      const id = [[ ${post.id} ]];-->
+
+<!--      if ( !confirm( '게시글을 삭제할까요?') ) {-->
+<!--        return false;-->
+<!--      }-->
+
+<!--      const formHtml = `-->
+<!--          <form id="deleteForm" action="/post/delete.do" method="post">-->
+<!--              <input type="hidden" id="id" name="id" value="${id}" />-->
+<!--          </form>-->
+<!--      `;-->
+<!--      const doc = new DOMParser().parseFromString(formHtml, 'text/html');-->
+<!--      const form = doc.body.firstChild;-->
+<!--      document.body.append(form);-->
+<!--      document.getElementById('deleteForm').submit();-->
+<!--    }-->
+
+<!--    /*]]>*/-->
+<!--  </script>-->
+<!--</th:block>-->
+
+<!--</html>-->
