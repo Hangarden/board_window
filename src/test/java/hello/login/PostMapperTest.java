@@ -23,8 +23,8 @@ public class PostMapperTest {
         params.setWriter("테스터");
         postMapper.save(params);
 
-        List<PostResponse> posts = postMapper.findAll();
-        System.out.println("전체 게시글 개수는 : " + posts.size() + "개입니다.");
+//        List<PostResponse> posts = postMapper.findAll();
+//        System.out.println("전체 게시글 개수는 : " + posts.size() + "개입니다.");
     }
 
 }
