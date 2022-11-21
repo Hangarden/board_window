@@ -34,6 +34,9 @@ public class CommentController {
             Object ob1 = session.getAttribute("NAME");
             String mySessionName = (String)ob1;
             params.setWriter(mySessionName);
+            Object ob2 = session.getAttribute("MEMBER_ID");
+            Integer mySessionId = (Integer)ob2;
+            params.setMemberKey(mySessionId);
             boolean isRegistered = commentService.registerComment(params); //boolean 타입 변수인 isRegistered 에는 CommentService의 registerComment의 메서드의 실행 결과를 저장한다. 실행 된다면 true 아니라면 false를 저장
             jsonObj.addProperty("result", isRegistered); //결과를 result라는 이름의 프로퍼티에 JSON 객체에 추가해서 리턴합니다.
 

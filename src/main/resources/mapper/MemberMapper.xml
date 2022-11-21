@@ -57,7 +57,8 @@
     <select id="selectMember" parameterType="String" resultType="Member">
         /*회원별 회원정보 조회*/
         SELECT
-            m.login_id
+              m.member_key
+             ,m.login_id
              ,m.password
              ,m.name
              ,m.email

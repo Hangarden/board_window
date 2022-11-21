@@ -40,6 +40,9 @@ public class PostController {
             Object ob1 = session.getAttribute("NAME");
             String mySessionName = (String)ob1;
             params.setWriter(mySessionName);
+            Object ob2 = session.getAttribute("MEMBER_ID");
+            Integer mySessionId = (Integer)ob2;
+            params.setMemberKey(mySessionId);
             postService.savePost(params);
             MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
@@ -55,9 +58,12 @@ public class PostController {
 
     // 게시글 상세 페이지
     @GetMapping("/post/view.do")
-    public String openPostView(@RequestParam Long id, Model model) {
+    public String openPostView(@RequestParam Long id, Model model, HttpSession session) {
         PostResponse post = postService.findPostById(id);
         post.setViewCnt(postService.updateCnt(id));
+        Object ob2 = session.getAttribute("MEMBER_ID");
+        Integer mySessionId = (Integer)ob2;
+        model.addAttribute("memberCheck", mySessionId);
         model.addAttribute("post", post);
         return "posts/view";
     }

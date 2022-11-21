@@ -12,6 +12,7 @@
 		, insert_time
 		, update_time
 		, delete_time
+        , member_key
     </sql>
 
     <insert id="insertComment" parameterType="CommentDTO">
@@ -26,6 +27,7 @@
         , NOW()
         , NULL
         , NULL
+        , #{memberKey}
         )
     </insert>
 

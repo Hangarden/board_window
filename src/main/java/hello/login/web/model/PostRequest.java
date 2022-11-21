@@ -10,7 +10,10 @@ public class PostRequest {
     private Long id;             // PK
     private String title;        // 제목
     private String content;      // 내용
+
     private String writer;       // 작성자
+
+    private Integer memberKey;
 
     public void removeTag() {
         this.title = this.title.replaceAll("<", "&lt;");

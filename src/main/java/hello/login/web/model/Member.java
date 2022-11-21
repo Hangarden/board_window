@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 
 
 @ToString
-@Data
+@Getter
+@Setter
 public class Member {
 
+    private Integer memberKey;
     private String login_id; //로그인 ID
     private String name; //사용자 이름
     private String password;

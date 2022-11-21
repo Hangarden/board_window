@@ -67,7 +67,8 @@ public class MemberController {
         if(checkMember != null && checkMember.getPassword() != null && password.equals(checkMember.getPassword())) {
             //String sessionId = checkMember.getMemberId();
             String sessionName = checkMember.getName();
-
+            Integer sessionId = checkMember.getMemberKey();
+            session.setAttribute("MEMBER_ID", sessionId);
             session.setAttribute("SID", loginId);
             System.out.printf("{}", loginId);
             session.setAttribute("NAME", sessionName);
