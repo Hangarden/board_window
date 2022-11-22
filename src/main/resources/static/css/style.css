@@ -1434,3 +1434,7 @@ textarea.form-control {
         min-width: 500px;
     }
 }
+
+.modify-Content {
+    display: inline;
+}

@@ -4,9 +4,41 @@
   <title>this is view page</title>
 </th:block>
 
+<th:block layout:fragment="modal">
+  <div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="modalWriter" class="col-form-label">작성자</label>
+              <input type="text" id="modalWriter" class="form-control" placeholder="작성자를 입력해 주세요." value="" readonly />
+            </div>
+            <div class="form-group">
+              <label for="modalContent" class="col-form-label">내용</label>
+              <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요." value=""></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light" data-dismiss="modal">취소하기</button>
+          <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light" onclick="updateComment()">수정하기</button>
+          <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light" onclick="deleteComment()">삭제하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+
+
 <th:block layout:fragment="content">
 
-  <div class="form-group" style="display: none">
+  <div class="form-group">
     <label class="col-sm-2 control-label" >멤버아이디</label>
     <div class="col-sm-10">
       <p class="form-control" id="memberKey" th:text="${post.memberKey}"></p>
@@ -91,91 +123,16 @@
       printCommentList();
     });
 
+    function openModal(idx, memberKey, writer, content) {
 
-    function updateComment(idx, writer, content) {
+      $("#commentModal").modal("toggle");
 
+      document.getElementById("modalWriter").value = writer;
+      document.getElementById("modalContent").value = content;
 
-      var htmls = "";
-
-      htmls += '<div class="media text-muted pt-3" id="idx' + idx + '">';
-
-      htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
-
-      htmls += '<title>Placeholder</title>';
-
-      htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
-
-      htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
-
-      htmls += '</svg>';
-
-      htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
-
-      htmls += '<span class="d-block">';
-
-      htmls += '<strong class="text-gray-dark">' + writer + '</strong>';
-
-      htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-
-      htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + idx + ', \'' + writer + '\')" style="padding-right:5px">저장</a>';
-
-      htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
-
-      htmls += '</span>';
-
-      htmls += '</span>';
-
-      htmls += '<textarea name="editContent" id="editContent" class="form-control" rows="3">';
-
-      htmls += content;
-
-      htmls += '</textarea>';
-
-
-
-      htmls += '</p>';
-
-      htmls += '</div>';
-
-
-
-      $('#idx' + idx).replaceWith(htmls);
-
-      $('#idx' + idx + ' #editContent').focus();
-
-      let query = window.location.search;
-      let param = new URLSearchParams(query);
-      let id = param.get('id');
-      let uri = '/comments/' + id;
-
-      const headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-      const params = {"idx": idx, "writer": writer.value, "content": content.value};
-      // var params = {"boardIdx": boardIdx, "content": content.value, "writer": "관리자"};
-
-    $.ajax({
-      url: uri,
-      type: "PATCH",
-      headers: headers,
-      dataType: "json",
-      data: JSON.stringify(params),
-      success: function(response) {
-        if (response.result == false) {
-          alert("댓글 수정에 실패하였습니다.");
-          return false;
-        }
-
-        printCommentList();
-        $("#commentModal").modal("hide");
-      },
-      error: function(xhr, status, error) {
-        alert("에러가 발생하였습니다.");
-        return false;
-      }
-    });
+      document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment("+ idx +")");
+      document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment("+ idx +")");
     }
-
-
-
 
     function insertComment(boardIdx) {
 
@@ -215,6 +172,41 @@
     }
     /*[- end of function -]*/
 
+    function updateComment(idx) {
+      const writer = document.getElementById("modalWriter");
+      const content = document.getElementById("modalContent");
+
+      // let query = window.location.search;
+      // let param = new URLSearchParams(query);
+      // let id = param.get('id');
+      let uri = '/comments/' + idx;
+
+      const headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+      const params = {"idx": idx, "writer": writer.value, "content": content.value};
+      // var params = {"boardIdx": boardIdx, "content": content.value, "writer": "관리자"};
+
+      $.ajax({
+        url: uri,
+        type: "PATCH",
+        headers: headers,
+        dataType: "json",
+        data: JSON.stringify(params),
+        success: function(response) {
+          if (response.result == false) {
+            alert("댓글 수정에 실패하였습니다.");
+            return false;
+          }
+
+          printCommentList();
+          $("#commentModal").modal("hide");
+        },
+        error: function(xhr, status, error) {
+          alert("에러가 발생하였습니다.");
+          return false;
+        }
+      });
+    }
+    /*[- end of function -]*/
     function printCommentList() {
 
       // const id = [[ ${post.id} ]];
@@ -223,19 +215,17 @@
       let param = new URLSearchParams(query);
       let id = param.get('id');
       let uri = '/comments/' + id;
-
-
       $.get(uri, function(response) {
         if (response != null) {
           let commentsHtml = "";
-
           $(response.commentList).each(function(idx, comment) {
             commentsHtml += `
 								<li>
 									<span class="name">${comment.writer}</span>
-									<span class="desc" id = "comment-content">${comment.content}</span>
-									<span class="time" id = "comment-content">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-									<button type="button" onclick="updateComment(${comment.idx}, '${comment.writer}', '${comment.content}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+									<span class="desc">${comment.content}</span>
+									<span class="desc">${comment.memberKey}</span>
+									<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+									<button type="button"  onclick="openModal(${comment.idx}, ${comment.memberKey}, '${comment.writer}', '${comment.content}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
 								</li>
 							`;
           });
@@ -245,6 +235,38 @@
       }, "json");
     }
     /*[- end of function -]*/
+
+    function deleteComment(idx) {
+      let uri = '/comments/' + idx;
+
+      if (!confirm('댓글을 삭제하시겠어요?')) {
+        return false;
+      }
+
+      const headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+
+      $.ajax({
+        url: uri,
+        type: "DELETE",
+        headers: headers,
+        dataType: "json",
+        success: function(response) {
+          if (response.result == false) {
+            alert("댓글 삭제에 실패하였습니다.");
+            return false;
+          }
+
+          printCommentList();
+          $("#commentModal").modal("hide");
+        },
+        error: function(xhr, status, error) {
+          alert("에러가 발생하였습니다.");
+          return false;
+        }
+      });
+    }
+
+
 
     // 게시글 삭제
     function deletePost() {
@@ -295,8 +317,6 @@
     //   }
     //
     // }
-
-
 
 
     /*]]>*/

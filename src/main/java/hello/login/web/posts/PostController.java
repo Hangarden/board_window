@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,7 +64,7 @@ public class PostController {
         Integer mySessionId = (Integer)ob2;
         model.addAttribute("memberCheck", mySessionId);
         model.addAttribute("post", post);
-        return "posts/view";
+        return "posts/viewModal";
     }
 
     // 기존 게시글 수정
