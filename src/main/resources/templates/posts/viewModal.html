@@ -108,6 +108,25 @@
           </div>
         </div>
         <ul class="notice-list"></ul>
+<!--        <div id="commentTable" th:with="username=${#authentication.name}">-->
+<!--          <div class="card-header bi bi-chat-dots mt-3">-->
+<!--            <span th:if=${commentList} th:text="${#lists.size(commentList)}"></span>-->
+<!--            Comments-->
+<!--          </div>-->
+<!--          <div th:each="comment:${commentList}" class="card">-->
+<!--            <ul class="list-group-flush">-->
+<!--              <li class="list-group-item">-->
+<!--                <form method="post">-->
+<!--                  <span th:text="${comment.username}" style="font-size: small"> 작성자 </span>-->
+<!--                  <span th:text="${#temporals.format(comment.createdDate, 'yyyy-MM-dd HH:mm')}" style="font-size: xx-small"> 날짜 </span>-->
+<!--                  </br>-->
+<!--                  <span th:text="${comment.comment}">댓글</span>-->
+<!--                  <button type="button" th:if="${#strings.equals(comment.username, username)}" th:attr="onclick=|openModal('${comment.id}', '${comment.username}', '${comment.comment}' )|" class="bi bi-pencil" style="float : right"></button>-->
+<!--                </form>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
       </form>
     </div>
     <!-- /.card-content -->
@@ -123,7 +142,7 @@
       printCommentList();
     });
 
-    function openModal(idx, memberKey, writer, content) {
+    function openModal(idx, writer, content) {
 
       $("#commentModal").modal("toggle");
 
@@ -223,14 +242,17 @@
 								<li>
 									<span class="name">${comment.writer}</span>
 									<span class="desc">${comment.content}</span>
-									<span class="desc">${comment.memberKey}</span>
 									<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-									<button type="button"  onclick="openModal(${comment.idx}, ${comment.memberKey}, '${comment.writer}', '${comment.content}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+									<button type="button" onclick="openModal(${comment.idx}, '${comment.writer}', '${comment.content}' )" class="btn btn-xs btn-circle">
+									<i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
+									</button>
 								</li>
 							`;
-          });
 
-          $(".notice-list").html(commentsHtml);
+
+            $(".notice-list").html(commentsHtml);
+
+          });
         }
       }, "json");
     }

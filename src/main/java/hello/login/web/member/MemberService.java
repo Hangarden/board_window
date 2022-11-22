@@ -19,6 +19,12 @@ public class MemberService {
 
     private final MemberMapper mapper;
 
+    public int passwordCheck(String password) {
+        int cnt = mapper.passwordCheck(password);
+        System.out.println("cnt: " + cnt);
+        return cnt;
+    }
+
 
     public int idCheck(String loginId) {
         int cnt = mapper.idCheck(loginId);

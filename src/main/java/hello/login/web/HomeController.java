@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class HomeController {
 
+    private final MemberService memberService;
+
 
 //    @GetMapping("/")
 //    public String homeLoginV3ArgumentResolver(@Login MemberVO loginMemberVO, Model model) {
@@ -46,6 +48,15 @@ public class HomeController {
         //세션에 회원 데이터가 없으면 home
 
         return "home";
+
+    }
+
+    @PostMapping("/passwordCheck")
+    @ResponseBody
+    public int idCheck(@RequestParam("password") String password) {
+
+        int cnt = memberService.passwordCheck(password);
+        return cnt;
 
     }
 }

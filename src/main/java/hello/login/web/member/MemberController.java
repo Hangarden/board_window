@@ -1,6 +1,7 @@
 package hello.login.web.member;
 
 //import hello.login.domain.member.MemberRepository;
+import hello.login.web.common.MessageDto;
 import hello.login.web.mapper.MemberMapper;
 import hello.login.web.model.Member;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +58,7 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(Member member, HttpSession session, RedirectAttributes reAttr) {
+    public String login(Member member, HttpSession session, Model model) {
 
         String loginId = member.getLogin_id();
         String password = member.getPassword();
@@ -77,9 +78,9 @@ public class MemberController {
             return "redirect:/loginHome";
         }
 
-        reAttr.addAttribute("result", "등록된 회원이 없습니다.");
+        MessageDto message = new MessageDto("등록된 회원이 없습니다.", "/members/login", RequestMethod.GET, null);
 
-        return "redirect:/member/login";
+        return showMessageAndRedirect(message, model);
     }
 
     /**
@@ -102,4 +103,8 @@ public class MemberController {
     }
 
 
+    private String showMessageAndRedirect(final MessageDto params, Model model) {
+        model.addAttribute("params", params);
+        return "common/messageRedirect";
+    }
 }

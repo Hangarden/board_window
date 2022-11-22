@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MemberMapper {
     int idCheck(String loginId);
 
+    int passwordCheck(String password);
+
     int addMember(Member member);
 
     void combineEmail(String email1, String email2);

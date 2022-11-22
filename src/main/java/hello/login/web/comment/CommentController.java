@@ -21,7 +21,7 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
-    @RequestMapping(value = { "/comments", "/comments/{idx}" }, method = { RequestMethod.POST, RequestMethod.PATCH }) //수정시에는 comment/{idx}로 전송
+    @RequestMapping(value = { "/comments" }, method = { RequestMethod.POST }) //수정시에는 comment/{idx}로 전송
     public JsonObject registerComment(@PathVariable(value = "idx", required = false) Long idx, @RequestBody final CommentDTO params, HttpSession session) {
 
         JsonObject jsonObj = new JsonObject();
@@ -37,6 +37,29 @@ public class CommentController {
             Object ob2 = session.getAttribute("MEMBER_ID");
             Integer mySessionId = (Integer)ob2;
             params.setMemberKey(mySessionId);
+            boolean isRegistered = commentService.registerComment(params); //boolean 타입 변수인 isRegistered 에는 CommentService의 registerComment의 메서드의 실행 결과를 저장한다. 실행 된다면 true 아니라면 false를 저장
+            jsonObj.addProperty("result", isRegistered); //결과를 result라는 이름의 프로퍼티에 JSON 객체에 추가해서 리턴합니다.
+
+        } catch (DataAccessException e) {
+            jsonObj.addProperty("message", "데이터베이스 처리 과정에 문제가 발생하였습니다.");  //삭제되었거나, 없는 게시글 번호(boardIdx)를 지정한 상태
+
+        } catch (Exception e) {
+            jsonObj.addProperty("message", "시스템에 문제가 발생하였습니다.");
+        }
+
+        return jsonObj;
+    }
+
+    @RequestMapping(value = { "/comments/{idx}" }, method = { RequestMethod.PATCH }) //수정시에는 comment/{idx}로 전송
+    public JsonObject updateComment(@PathVariable(value = "idx", required = false) Long idx, @RequestBody final CommentDTO params, HttpSession session) {
+
+        JsonObject jsonObj = new JsonObject();
+
+        try {
+            if (idx != null) { //idx가 null이 아니라는 것은 댓글번호, PK가 포함되어 있다는 의미, PK가 포함되어 있다는 것은 이미 생성된 댓글임을 의미한다
+                params.setIdx(idx);
+            }
+
             boolean isRegistered = commentService.registerComment(params); //boolean 타입 변수인 isRegistered 에는 CommentService의 registerComment의 메서드의 실행 결과를 저장한다. 실행 된다면 true 아니라면 false를 저장
             jsonObj.addProperty("result", isRegistered); //결과를 result라는 이름의 프로퍼티에 JSON 객체에 추가해서 리턴합니다.
 

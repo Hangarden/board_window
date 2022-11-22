@@ -13,6 +13,16 @@
             WHERE
                 login_id= #{login_id}
         </select>
+
+    <select id="passwordCheck" parameterType="String" resultType="int"><!-- resultltType : select 된 데이터를 반환할 (그릇)을 정해주는것 위의 코드같은경우엔 StockNewsVO 객체에 담긴다 -->
+        /*회원 아이디 중복 체크*/
+        SELECT
+            COUNT(password)
+        FROM
+            member
+        WHERE
+            password= #{password}
+    </select>
 <!--        SELECT COUNT(login_id) FROM member WHERE login_id= #{login_id}-->
 <!--    </select>-->
 

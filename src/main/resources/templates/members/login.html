@@ -1,127 +1,186 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
-<!--      layout:decorate="~{layout/default}">-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-<style>
-  body {
-    min-height: 100vh;
-
-    background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-    background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-    background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-    background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-    background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
-  }
-/*js 경로 복사*/
-  #loginForm > table {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .input-form {
-    max-width: 680px;
-
-    margin-top: 80px;
-    padding: 32px;
-
-    background: #fff;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-  }
-
-  .container {
-    max-width: 560px;
-  }
-
-</style>
-<script
-        src="https://code.jquery.com/jquery-3.6.1.min.js"
-        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-        crossorigin="anonymous"></script>
-<!-- 사용자 정의 title -->
-<th:block layout:fragment="customTitle">
-  <title th:text="${title}"></title>
-</th:block>
-
-<th:block layout:fragment="customScript">
-  <script>
-    $(function(){
-      function validationCheck(data){
-        if(typeof data == 'undefined' || data == '' || data == null){
-          return false;
-        }
-        return true;
-      }
-
-      $('#loginBtn').click(function(){
-
-        let isSubmit = true;
-        let inputObj = $('#loginForm').find('input');
-
-        $.each(inputObj, function(){
-          let inputId = $(this).attr('id');
-          let inputLabel = $('label[for="'+ inputId +'"]').text();
-          let inputData = $(this).val();
-          let result = validationCheck(inputData);
-
-
-          //사용자가 입력하지 않은 경우
-          if(!result){
-            alert(inputLabel + '을 입력해주세요.');
-            $(this).focus();
-            isSubmit = false;
-            return false;
-          }
-        })
-
-        if(isSubmit) $('#loginForm').submit();
-      });
-    });
-  </script>
-
-
-</th:block>
+<head>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .container {
+      max-width: 560px;
+    }
+    .field-error {
+      border-color: #dc3545;
+      color: #dc3545;
+    }
+    .password-not-same{
+      display: none;
+    }
+  </style>
+</head>
 <body>
-<div class="input-form-backgroud row">
-  <div class="input-form col-md-12 mx-auto">
-<th:block layout:fragment="customContents">
-  <form id="loginForm" th:action="@{/members/login}" method="post" >
-    <table border="1">
-      <tbody>
-      <tr>
-        <td><label for="login_id">회원아이디</label></td>
-        <td>
-          <input type="text" name="login_id" id="login_id">
-        </td>
-      </tr>
-      <tr>
-        <td><label for="password">회원비밀번호</label></td>
-        <td>
-          <input type="password" name="password" id="password">
-        </td>
-      </tr>
-      </tbody>
-      <tfoot>
-      <tr>
-        <td colspan="2">
-          <button id="loginBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >로그인</button>
-        </td>
-      </tr>
-      </tfoot>
-    </table>
-    <div th:if="${not #strings.isEmpty(result)}">
-      <p th:text="${result}" style="color:red;"></p>
+
+<div class="container">
+
+  <div class="py-5 text-center">
+    <h2>로그인</h2>
+  </div>
+        <form id="loginForm" th:action="@{/members/login}" method="post" >
+    <div>
+      <label for="login_id">회원아이디</label>
+      <input type="text" name="login_id" id="login_id" class = "form-control">
     </div>
+    <div>
+      <label for="password">비밀번호</label>
+      <input type="password" name="password" id="password" onkeyup="passwordCheck()" class = "form-control">
+      <span class="password-not-same">비밀번호 불일치</span>
+    </div>
+    <hr class="my-4">
+
+    <div class="row">
+      <div class="col">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">로그인</button>
+      </div>
+      <div class="col">
+        <button class="w-100 btn btn-secondary btn-lg" th:onclick="|location.href='@{/}'|"
+                type="button">취소</button>
+      </div>
+    </div>
+
   </form>
-</th:block>
-  </div> <!-- /container -->
-</div>
+
+</div> <!-- /container -->
 </body>
 </html>
+
+<script type="text/javascript">
+
+</script>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--&lt;!&ndash;      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"&ndash;&gt;-->
+<!--&lt;!&ndash;      layout:decorate="~{layout/default}">&ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+
+<!--<style>-->
+<!--  body {-->
+<!--    min-height: 100vh;-->
+
+<!--    background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));-->
+<!--    background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);-->
+<!--    background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);-->
+<!--    background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);-->
+<!--    background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);-->
+<!--  }-->
+<!--  /*js 경로 복사*/-->
+<!--  #loginForm > table {-->
+<!--    margin-left: auto;-->
+<!--    margin-right: auto;-->
+<!--  }-->
+
+<!--  .input-form {-->
+<!--    max-width: 680px;-->
+
+<!--    margin-top: 80px;-->
+<!--    padding: 32px;-->
+
+<!--    background: #fff;-->
+<!--    -webkit-border-radius: 10px;-->
+<!--    -moz-border-radius: 10px;-->
+<!--    border-radius: 10px;-->
+<!--    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);-->
+<!--    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);-->
+<!--    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)-->
+<!--  }-->
+
+<!--  .container {-->
+<!--    max-width: 560px;-->
+<!--  }-->
+
+<!--</style>-->
+<!--<script-->
+<!--        src="https://code.jquery.com/jquery-3.6.1.min.js"-->
+<!--        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="-->
+<!--        crossorigin="anonymous"></script>-->
+<!--&lt;!&ndash; 사용자 정의 title &ndash;&gt;-->
+<!--<th:block layout:fragment="customTitle">-->
+<!--  <title th:text="${title}"></title>-->
+<!--</th:block>-->
+
+<!--<th:block layout:fragment="customScript">-->
+<!--  <script>-->
+<!--    $(function(){-->
+<!--      function validationCheck(data){-->
+<!--        if(typeof data == 'undefined' || data == '' || data == null){-->
+<!--          return false;-->
+<!--        }-->
+<!--        return true;-->
+<!--      }-->
+
+<!--      $('#loginBtn').click(function(){-->
+
+<!--        let isSubmit = true;-->
+<!--        let inputObj = $('#loginForm').find('input');-->
+
+<!--        $.each(inputObj, function(){-->
+<!--          let inputId = $(this).attr('id');-->
+<!--          alert(inputId); //login_id, password-->
+<!--          let inputLabel = $('label[for="'+ inputId +'"]').text();-->
+<!--          let inputData = $(this).val();-->
+<!--          let result = validationCheck(inputData);-->
+
+
+<!--          //사용자가 입력하지 않은 경우-->
+<!--          if(!result){-->
+<!--            alert(inputLabel + '을 입력해주세요.');-->
+<!--            $(this).focus();-->
+<!--            isSubmit = false;-->
+<!--            return false;-->
+<!--          }-->
+<!--        })-->
+
+<!--        if(isSubmit) $('#loginForm').submit();-->
+<!--      });-->
+<!--    });-->
+<!--  </script>-->
+
+
+<!--</th:block>-->
+<!--<body>-->
+<!--<div class="input-form-backgroud row">-->
+<!--  <div class="input-form col-md-12 mx-auto">-->
+<!--    <th:block layout:fragment="customContents">-->
+<!--      <form id="loginForm" th:action="@{/members/login}" method="post" >-->
+<!--        <table border="1">-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <td><label for="login_id">회원아이디</label></td>-->
+<!--            <td>-->
+<!--              <input type="text" name="login_id" id="login_id">-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td><label for="password">회원비밀번호</label></td>-->
+<!--            <td>-->
+<!--              <input type="password" name="password" id="password">-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--          <tfoot>-->
+<!--          <tr>-->
+<!--            <td colspan="2">-->
+<!--              <button id="loginBtn" type="button" style="width:100%; height:30px; line-height: 30px;" >로그인</button>-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--          </tfoot>-->
+<!--        </table>-->
+<!--        <div th:if="${not #strings.isEmpty(result)}">-->
+<!--          <p th:text="${result}" style="color:red;"></p>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--    </th:block>-->
+<!--  </div> &lt;!&ndash; /container &ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

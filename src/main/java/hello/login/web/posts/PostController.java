@@ -62,6 +62,9 @@ public class PostController {
         post.setViewCnt(postService.updateCnt(id));
         Object ob2 = session.getAttribute("MEMBER_ID");
         Integer mySessionId = (Integer)ob2;
+        Object ob1 = session.getAttribute("NAME");
+        String mySessionName = (String)ob1;
+        model.addAttribute("memberName", mySessionName);
         model.addAttribute("memberCheck", mySessionId);
         model.addAttribute("post", post);
         return "posts/viewModal";
